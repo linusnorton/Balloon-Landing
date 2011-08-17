@@ -7,16 +7,15 @@ import android.view.Window;
 import android.view.WindowManager;
 
 /**
- * This class handles the UI for the game.
- * 
- * It is also responsible for creating and managing both the GameView
+ * This class is responsible for creating and managing both the GameView
  * and GameThread
  * 
  * @author Linus Norton <linusnorton@gmail.com>
  */
 public class GameActivity extends Activity {
-    private GameView surface;
-
+    private GameView view;
+    private BalloonThread game;
+    
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -25,8 +24,29 @@ public class GameActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
                              WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.game);
-        
-        surface = (GameView)findViewById(R.id.gameView);
-        surface.init();        
+        init(); 
     }
+    
+    /**
+     * Create a new BalloonThread, init the surface and set the game going
+     */
+    public void init() {
+        game = new BalloonThread();
+        
+        view = (GameView)findViewById(R.id.gameView);
+        view.init(game);
+        
+        game.setRenderer(view);
+        new Thread(game).start();
+    }
+    
+    /**
+     * Stop the game thread
+     */
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        game.end();
+    }
+    
 }

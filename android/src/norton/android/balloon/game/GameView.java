@@ -1,7 +1,11 @@
 package norton.android.balloon.game;
 
+import norton.android.util.graphics.Drawable;
+import norton.android.util.graphics.Renderer;
+import norton.android.util.graphics.Scene;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.Surface;
@@ -13,7 +17,8 @@ import android.view.SurfaceView;
  * 
  * @author Linus Norton <linusnorton@gmail.com>
  */
-public class GameView extends SurfaceView implements SurfaceHolder.Callback {
+public class GameView extends SurfaceView implements SurfaceHolder.Callback, Renderer {
+    private BalloonThread game;
 
     /**
      * Constructor
@@ -27,8 +32,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     /**
      * Set up the surface
      */
-    public void init() {
-        
+    public void init(BalloonThread game) {
+        this.game = game;
+        this.setOnTouchListener(game);
     }
 
     @Override
@@ -48,6 +54,23 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public void surfaceDestroyed(SurfaceHolder holder) {
         // TODO Auto-generated method stub
         
+    }
+
+    /**
+     * Draw the game to the surface
+     */
+    @Override
+    public void render(Scene scene) {
+        Canvas canvas = getHolder().lockCanvas();
+        
+        if (canvas != null) {            
+            canvas.drawColor(Color.WHITE);
+            
+            for (Drawable d : scene.getDrawables()) {
+                d.onDraw(canvas);
+            }
+            getHolder().unlockCanvasAndPost(canvas);                   
+        }
     }
 
 }
