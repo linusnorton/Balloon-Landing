@@ -18,7 +18,6 @@ import android.view.SurfaceView;
  * @author Linus Norton <linusnorton@gmail.com>
  */
 public class GameView extends SurfaceView implements SurfaceHolder.Callback, Renderer {
-    private BalloonThread game;
 
     /**
      * Constructor
@@ -27,14 +26,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Ren
      */
     public GameView(Context context, AttributeSet attrs) {
         super(context, attrs);
-    }
-
-    /**
-     * Set up the surface
-     */
-    public void init(BalloonThread game) {
-        this.game = game;
-        this.setOnTouchListener(game);
     }
 
     @Override

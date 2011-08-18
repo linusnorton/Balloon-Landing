@@ -14,8 +14,12 @@ public final class R {
         public static final int icon=0x7f020000;
     }
     public static final class id {
-        public static final int button1=0x7f050001;
-        public static final int gameView=0x7f050000;
+        public static final int button1=0x7f060001;
+        public static final int gameView=0x7f060000;
+    }
+    public static final class integer {
+        public static final int balloonHeight=0x7f050001;
+        public static final int balloonWidth=0x7f050000;
     }
     public static final class layout {
         public static final int game=0x7f030000;

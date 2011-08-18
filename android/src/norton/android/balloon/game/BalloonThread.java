@@ -16,13 +16,20 @@ import norton.android.util.graphics.Drawable;
  * @author Linus Norton <linusnorton@gmail.com>
  */
 public class BalloonThread extends GameThread implements OnTouchListener {
-
-    public BalloonThread() {
-        super();
+    private HashSet<Drawable> drawables;
+    private Balloon balloon;
+    
+    public BalloonThread(Balloon balloon) {
+        this(20, balloon);
     }
     
-    public BalloonThread(int fps) {
+    public BalloonThread(int fps, Balloon balloon) {
         super(fps);
+
+        this.balloon = balloon;
+
+        drawables = new HashSet<Drawable>();
+        drawables.add(balloon);
     }
 
     @Override
@@ -32,7 +39,7 @@ public class BalloonThread extends GameThread implements OnTouchListener {
     
     @Override
     public Set<Drawable> getDrawables() {
-        return new HashSet<Drawable>();
+        return drawables;
     }
     
     @Override

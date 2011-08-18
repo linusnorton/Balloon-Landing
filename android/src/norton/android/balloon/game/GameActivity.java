@@ -24,17 +24,18 @@ public class GameActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
                              WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.game);
-        init(); 
+        init();
     }
     
     /**
      * Create a new BalloonThread, init the surface and set the game going
      */
-    public void init() {
-        game = new BalloonThread();
+    private void init() {
+        GameObjectInflator inflator = new GameObjectInflator(getResources());
+        game = inflator.getGameThread();
         
         view = (GameView)findViewById(R.id.gameView);
-        view.init(game);
+        view.setOnTouchListener(game);
         
         game.setRenderer(view);
         new Thread(game).start();
@@ -47,6 +48,6 @@ public class GameActivity extends Activity {
     public void onDestroy() {
         super.onDestroy();
         game.end();
-    }
+    }   
     
 }
