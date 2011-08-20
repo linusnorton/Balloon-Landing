@@ -1,6 +1,7 @@
 package norton.android.balloon.game;
 
 import norton.android.balloon.R;
+import norton.android.util.geometry.Vector;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
@@ -12,25 +13,87 @@ import android.graphics.Matrix;
  * @author Linus Norton <linusnorton@gmail.com>
  */
 public class GameObjectInflator {
-    private Resources resources;
+    private Resources r;
     
     /**
      * Create the GameObjectInflator with the given Resources
-     * @param resources
+     * @param r
      */
     public GameObjectInflator(Resources resources) {
-        this.resources = resources;        
+        this.r = resources;        
     }
     
+    /**
+     * Inflate the game from the xml configuration
+     * @return
+     */
     public BalloonThread getGameThread() {        
-        return new BalloonThread(getBalloon());
+        return new BalloonThread(
+            getBalloon(), 
+            getWind(), 
+            getWindResistence(), 
+            getGravity(),
+            getLift()
+        );
     }
     
+    /**
+     * Create the lift from the xml config. 
+     * 
+     * Note that magnitudes are scaled by the dpToPx conversion
+     * @return
+     */
+    private Vector getLift() {
+        float magnitude = dpToPx(Float.parseFloat(r.getString(R.string.lift)));
+        return new Vector(r.getInteger(R.integer.liftDirection), magnitude);
+    }
+
+    /**
+     * Create the gravity vector from the xml config
+     * 
+     * Note that magnitudes are scaled by the dpToPx conversion
+     * @return
+     */
+    private Vector getGravity() {
+        float magnitude = dpToPx(Float.parseFloat(r.getString(R.string.gravity)));
+        return new Vector(r.getInteger(R.integer.gravityDirection), magnitude);
+    }
+
+    /**
+     * Create the wind resistence from the xml config
+     * 
+     * Note that magnitudes are scaled by the dpToPx conversion
+     * @return
+     */
+    private Vector getWindResistence() {
+        float magnitude = dpToPx(Float.parseFloat(r.getString(R.string.windResistence)));
+        return new Vector(r.getInteger(R.integer.windReistenceDirection), magnitude);
+    }
+
+    /**
+     * Create the wind vector using the xml config
+     * 
+     * Note that magnitudes are scaled by the dpToPx conversion
+     * @return
+     */
+    private Vector getWind() {
+        float magnitude = dpToPx(Float.parseFloat(r.getString(R.string.wind)));
+        return new Vector(r.getInteger(R.integer.windDirection), magnitude);
+    }
+
+    /**
+     * Use the balloonWidth and balloonHeight from the xml config to
+     * create a balloon. The input values in dp are scaled to px
+     * 
+     * @return
+     */
     private Balloon getBalloon() {
-        int width = dpToPx(resources.getInteger(R.integer.balloonWidth));
-        int height = dpToPx(resources.getInteger(R.integer.balloonHeight));
+        int width = (int) dpToPx(r.getInteger(R.integer.balloonWidth));
+        int height = (int) dpToPx(r.getInteger(R.integer.balloonHeight));
+        int x = (int) dpToPx(r.getInteger(R.integer.balloonStartX));
+        int y = (int) dpToPx(r.getInteger(R.integer.ballooonStartY));
         
-        return new Balloon(width, height);
+        return new Balloon(x, y, width, height);
     }
     
     /**
@@ -42,8 +105,8 @@ public class GameObjectInflator {
      * @return resized bitmap
      */
     private Bitmap getResizedBitmap(Bitmap bm, int newWidth, int newHeight) {
-        newWidth = dpToPx(newWidth);
-        newHeight = dpToPx(newHeight);
+        newWidth = (int) dpToPx(newWidth);
+        newHeight = (int) dpToPx(newHeight);
         
         int width = bm.getWidth();
         int height = bm.getHeight();
@@ -67,7 +130,7 @@ public class GameObjectInflator {
      * @param dp
      * @return px
      */
-    private int dpToPx(int dp) {
-        return (int) (0.5f + dp * resources.getDisplayMetrics().density);
+    private float dpToPx(float dp) {
+        return 0.5f + dp * r.getDisplayMetrics().density;
     }
 }

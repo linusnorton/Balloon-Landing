@@ -14,14 +14,16 @@ public class Balloon extends Particle implements Drawable {
     /**
      * Create Balloon 
      */
-    public Balloon(int width, int height) {
+    public Balloon(int x, int y, int width, int height) {
         super();
         
         paint = new Paint();
         paint.setColor(Color.RED);
         
+        this.setX(x);
+        this.setY(y);
         this.width = width;
-        this.height = height;
+        this.height = height;        
     }
 
     /**

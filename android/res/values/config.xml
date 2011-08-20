@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer name="balloonWidth">40</integer>
-    <integer name="balloonHeight">40</integer> 
+    <integer name="balloonHeight">40</integer>
+    <integer name="balloonStartX">140</integer>
+    <integer name="ballooonStartY">140</integer>
+    
+    <!-- Forces -->
+    <string name="gravity">9.8</string>
+    <integer name="gravityDirection">90</integer> 
+    <string name="lift">9.8</string>
+    <integer name="liftDirection">270</integer>
+    <string name="windResistence">6</string>
+    <integer name="windReistenceDirection">180</integer>
+    <string name="wind">5</string>
+    <integer name="windDirection">0</integer>
 </resources>
