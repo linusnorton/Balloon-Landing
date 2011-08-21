@@ -31,7 +31,8 @@ public class GameObjectInflator {
         return new BalloonThread(
             r.getDisplayMetrics().heightPixels,
             r.getDisplayMetrics().widthPixels,
-            getBalloon(), 
+            getBalloon(),
+            getTrain(),
             getWind(), 
             getWindResistence(), 
             getGravity(),
@@ -39,6 +40,19 @@ public class GameObjectInflator {
         );
     }
     
+    /**
+     * Create train object
+     * @return
+     */
+    private Train getTrain() {
+        return new Train(
+            r.getInteger(R.integer.trainStartX),
+            r.getDisplayMetrics().heightPixels,
+            r.getInteger(R.integer.trainWidth),
+            r.getInteger(R.integer.trainHeight)
+        );
+    }
+
     /**
      * Create the lift from the xml config. 
      * 

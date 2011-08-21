@@ -3,6 +3,7 @@ package norton.android.balloon.game;
 import java.util.HashSet;
 import java.util.Set;
 
+import android.graphics.Rect;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,6 +21,7 @@ import norton.android.util.graphics.Drawable;
 public class BalloonThread extends GameThread implements OnTouchListener {
     private HashSet<Drawable> drawables;
     private Balloon balloon;
+    private Train train;
     private VariableVector wind;
     private Vector windResistence;
     private Vector gravity;
@@ -43,6 +45,7 @@ public class BalloonThread extends GameThread implements OnTouchListener {
     public BalloonThread(int heightPixels, 
                          int widthPixels, 
                          Balloon balloon, 
+                         Train train,
                          VariableVector wind,
                          Vector windResistence,
                          Vector gravity,
@@ -54,6 +57,7 @@ public class BalloonThread extends GameThread implements OnTouchListener {
         this.maxHeight = heightPixels - 10 - balloon.getHeight();
         this.maxWidth = widthPixels;
         this.balloon = balloon;
+        this.train = train;
         this.wind = wind;
         this.windResistence = windResistence;
         this.gravity = gravity;
@@ -61,6 +65,7 @@ public class BalloonThread extends GameThread implements OnTouchListener {
 
         drawables = new HashSet<Drawable>();
         drawables.add(balloon);
+        drawables.add(train);
     }
 
     /**
@@ -68,14 +73,48 @@ public class BalloonThread extends GameThread implements OnTouchListener {
      */
     @Override
     protected void tick() {
-        //apply the constant forces
-        balloon.applyVector(gravity);
-        balloon.applyVector(windResistence);
-        //apply the variable forces
-        balloon.applyVector(lift);
-        balloon.applyVector(wind);
+        applyVectors();               
+        updateVariableVectors();        
+        checkBounds();
+        checkCollisions();
+    }
+
+    private void checkCollisions() {
+        Rect bRect = new Rect(
+            (int) balloon.getX(), 
+            (int) balloon.getY(), 
+            balloon.getWidth(), 
+            balloon.getHeight()
+        );
+        Rect tRect = new Rect(
+            (int) train.getX(), 
+            (int) train.getY(), 
+            train.getWidth(), 
+            train.getHeight()
+        );
         
-       
+        if (Rect.intersects(bRect, tRect)) {
+            end();
+        }
+    }
+    
+    /**
+     * Make sure the balloon isn't out of bounds 
+     */
+    private void checkBounds() {
+        if (balloon.getX() < 5) {
+            balloon.setX(5);
+        }
+        
+        if (balloon.getY() > maxHeight) {
+            balloon.setY(maxHeight);
+        }
+    }
+
+    /**
+     * Accelerate / decelerate wind and lift
+     */
+    private void updateVariableVectors() {
         if (burnerOn) {
             lift.accelerate();
         }
@@ -89,14 +128,18 @@ public class BalloonThread extends GameThread implements OnTouchListener {
         else {
             wind.decelerate();
         }
-        
-        if (balloon.getX() < 5) {
-            balloon.setX(5);
-        }
-        
-        if (balloon.getY() > maxHeight) {
-            balloon.setY(maxHeight);
-        }
+    }
+
+    /**
+     * Apply the wind, wind resistence, gravity and lift
+     */
+    private void applyVectors() {
+        //apply the constant forces
+        balloon.applyVector(gravity);
+        balloon.applyVector(windResistence);
+        //apply the variable forces
+        balloon.applyVector(lift);
+        balloon.applyVector(wind);
     }
     
     /**

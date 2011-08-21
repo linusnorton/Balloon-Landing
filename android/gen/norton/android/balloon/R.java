@@ -24,10 +24,15 @@ public final class R {
          */
         public static final int balloonWidth=0x7f050000;
         public static final int ballooonStartY=0x7f050003;
-        public static final int gravityDirection=0x7f050004;
-        public static final int liftDirection=0x7f050006;
-        public static final int windDirection=0x7f050007;
-        public static final int windReistenceDirection=0x7f050005;
+        public static final int gravityDirection=0x7f050007;
+        public static final int liftDirection=0x7f050009;
+        public static final int trainHeight=0x7f050005;
+        public static final int trainStartX=0x7f050006;
+        /**  Train 
+         */
+        public static final int trainWidth=0x7f050004;
+        public static final int windDirection=0x7f05000a;
+        public static final int windReistenceDirection=0x7f050008;
     }
     public static final class layout {
         public static final int game=0x7f030000;
