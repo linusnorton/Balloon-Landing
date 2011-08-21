@@ -29,6 +29,8 @@ public class GameObjectInflator {
      */
     public BalloonThread getGameThread() {        
         return new BalloonThread(
+            r.getDisplayMetrics().heightPixels,
+            r.getDisplayMetrics().widthPixels,
             getBalloon(), 
             getWind(), 
             getWindResistence(), 
@@ -43,9 +45,15 @@ public class GameObjectInflator {
      * Note that magnitudes are scaled by the dpToPx conversion
      * @return
      */
-    private Vector getLift() {
-        float magnitude = dpToPx(Float.parseFloat(r.getString(R.string.lift)));
-        return new Vector(r.getInteger(R.integer.liftDirection), magnitude);
+    private VariableVector getLift() {
+        return new VariableVector(
+            r.getInteger(R.integer.liftDirection), 
+            dpToPx(Float.parseFloat(r.getString(R.string.lift))),
+            dpToPx(Float.parseFloat(r.getString(R.string.minimumLift))),
+            dpToPx(Float.parseFloat(r.getString(R.string.maximumLift))),
+            dpToPx(Float.parseFloat(r.getString(R.string.liftAcceleration))),
+            dpToPx(Float.parseFloat(r.getString(R.string.liftDeceleration)))
+        );
     }
 
     /**
@@ -76,9 +84,15 @@ public class GameObjectInflator {
      * Note that magnitudes are scaled by the dpToPx conversion
      * @return
      */
-    private Vector getWind() {
-        float magnitude = dpToPx(Float.parseFloat(r.getString(R.string.wind)));
-        return new Vector(r.getInteger(R.integer.windDirection), magnitude);
+    private VariableVector getWind() {
+        return new VariableVector(
+                r.getInteger(R.integer.windDirection), 
+                dpToPx(Float.parseFloat(r.getString(R.string.wind))),
+                dpToPx(Float.parseFloat(r.getString(R.string.minimumWind))),
+                dpToPx(Float.parseFloat(r.getString(R.string.maximumWind))),
+                dpToPx(Float.parseFloat(r.getString(R.string.windAcceleration))),
+                dpToPx(Float.parseFloat(r.getString(R.string.windDeceleration)))
+            );
     }
 
     /**

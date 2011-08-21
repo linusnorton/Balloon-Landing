@@ -20,15 +20,19 @@ import norton.android.util.graphics.Drawable;
 public class BalloonThread extends GameThread implements OnTouchListener {
     private HashSet<Drawable> drawables;
     private Balloon balloon;
-    private Vector wind;
+    private VariableVector wind;
     private Vector windResistence;
     private Vector gravity;
-    private Vector lift;
+    private VariableVector lift;
     private boolean burnerOn;
     private boolean windBlowing;
+    private int maxHeight;
+    private int maxWidth;
     
     /**
      * Create the game thread
+     * @param widthPixels 
+     * @param heightPixels 
      * 
      * @param balloon
      * @param wind
@@ -36,15 +40,19 @@ public class BalloonThread extends GameThread implements OnTouchListener {
      * @param gravity
      * @param lift
      */
-    public BalloonThread(Balloon balloon, 
-                         Vector wind,
+    public BalloonThread(int heightPixels, 
+                         int widthPixels, 
+                         Balloon balloon, 
+                         VariableVector wind,
                          Vector windResistence,
                          Vector gravity,
-                         Vector lift) {
+                         VariableVector lift) {
         super();
 
         this.burnerOn = false;
         this.windBlowing = false;
+        this.maxHeight = heightPixels - 10 - balloon.getHeight();
+        this.maxWidth = widthPixels;
         this.balloon = balloon;
         this.wind = wind;
         this.windResistence = windResistence;
@@ -68,26 +76,26 @@ public class BalloonThread extends GameThread implements OnTouchListener {
         balloon.applyVector(wind);
         
        
-        if (burnerOn && lift.getMagnitude() < 12) {
-            lift.setMagnitude(lift.getMagnitude() + 0.2f);
+        if (burnerOn) {
+            lift.accelerate();
         }
-        else if (lift.getMagnitude() > 0){
-            lift.setMagnitude(lift.getMagnitude() - 0.06f);
+        else {
+            lift.decelerate();
         }
         
-        if (windBlowing && wind.getMagnitude() < 11) {
-            wind.setMagnitude(wind.getMagnitude() + 0.26f);
+        if (windBlowing) {
+            wind.accelerate();
         }
-        else if (wind.getMagnitude() > 0){
-            wind.setMagnitude(wind.getMagnitude() - 0.14f);
+        else {
+            wind.decelerate();
         }
         
         if (balloon.getX() < 5) {
             balloon.setX(5);
         }
         
-        if (balloon.getY() > 200) {
-            balloon.setY(200);
+        if (balloon.getY() > maxHeight) {
+            balloon.setY(maxHeight);
         }
     }
     

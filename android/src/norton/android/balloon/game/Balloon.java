@@ -32,5 +32,34 @@ public class Balloon extends Particle implements Drawable {
     @Override
     public void onDraw(Canvas canvas) {
         canvas.drawRect(getX(), getY(), getX() + width, getY() + height, paint);
-    }    
+    }
+
+    /**
+     * @return the width
+     */
+    public int getWidth() {
+        return width;
+    }
+
+    /**
+     * @param width the width to set
+     */
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    /**
+     * @return the height
+     */
+    public int getHeight() {
+        return height;
+    }
+
+    /**
+     * @param height the height to set
+     */
+    public void setHeight(int height) {
+        this.height = height;
+    }   
+        
 }
