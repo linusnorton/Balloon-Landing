@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, BalloonLanding!</string>
-    <string name="app_name">Ballon Landing</string>
+    <string name="app_name">Ballon Landing</string>    
+    <string name="burnerButton">Fire ^</string>
+    <string name="windButton">Wind ></string>
 </resources>

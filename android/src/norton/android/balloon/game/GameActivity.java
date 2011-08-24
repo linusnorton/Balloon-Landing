@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 
 /**
  * This class is responsible for creating and managing both the GameView
@@ -36,6 +37,12 @@ public class GameActivity extends Activity {
         
         view = (GameView)findViewById(R.id.gameView);
         view.setOnTouchListener(game);
+        
+        Button button1 = (Button)findViewById(R.id.button1);
+        button1.setOnTouchListener(game);
+        
+        Button button2 = (Button)findViewById(R.id.button2);
+        button2.setOnTouchListener(game);
         
         game.setRenderer(view);
         new Thread(game).start();

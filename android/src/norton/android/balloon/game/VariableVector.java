@@ -1,5 +1,6 @@
 package norton.android.balloon.game;
 
+import android.util.Log;
 import norton.android.util.geometry.Vector;
 
 public class VariableVector extends Vector {

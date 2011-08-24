@@ -5,6 +5,7 @@ import norton.android.util.geometry.Vector;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
+import android.util.Log;
 
 /**
  * This class uses the given XML configuration to create
@@ -65,8 +66,8 @@ public class GameObjectInflator {
             dpToPx(Float.parseFloat(r.getString(R.string.lift))),
             dpToPx(Float.parseFloat(r.getString(R.string.minimumLift))),
             dpToPx(Float.parseFloat(r.getString(R.string.maximumLift))),
-            dpToPx(Float.parseFloat(r.getString(R.string.liftAcceleration))),
-            dpToPx(Float.parseFloat(r.getString(R.string.liftDeceleration)))
+            Float.parseFloat(r.getString(R.string.liftAcceleration)),
+            Float.parseFloat(r.getString(R.string.liftDeceleration))
         );
     }
 
@@ -104,8 +105,8 @@ public class GameObjectInflator {
                 dpToPx(Float.parseFloat(r.getString(R.string.wind))),
                 dpToPx(Float.parseFloat(r.getString(R.string.minimumWind))),
                 dpToPx(Float.parseFloat(r.getString(R.string.maximumWind))),
-                dpToPx(Float.parseFloat(r.getString(R.string.windAcceleration))),
-                dpToPx(Float.parseFloat(r.getString(R.string.windDeceleration)))
+                Float.parseFloat(r.getString(R.string.windAcceleration)),
+                Float.parseFloat(r.getString(R.string.windDeceleration))
             );
     }
 

@@ -5,9 +5,13 @@ import java.util.Set;
 
 import android.graphics.Rect;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
 import android.view.View.OnTouchListener;
+import norton.android.balloon.R;
 import norton.android.util.game.GameThread;
 import norton.android.util.geometry.Vector;
 import norton.android.util.graphics.Drawable;
@@ -154,11 +158,21 @@ public class BalloonThread extends GameThread implements OnTouchListener {
      * Trigger the burner
      */
     @Override
-    public boolean onTouch(View v, MotionEvent event) {        
-        burnerOn = !burnerOn;
-        windBlowing = !windBlowing;
-        
-        return true;
+    public boolean onTouch(View v, MotionEvent event) {
+        if (v.getId() == R.id.button1 && event.getAction() == MotionEvent.ACTION_DOWN) {
+            burnerOn = true;
+        }
+        else if (v.getId() == R.id.button1 && event.getAction() == MotionEvent.ACTION_UP) {
+            burnerOn = false;
+        } 
+        else if (v.getId() == R.id.button2 && event.getAction() == MotionEvent.ACTION_DOWN) {
+            windBlowing = true;
+        } 
+        else if (v.getId() == R.id.button2 && event.getAction() == MotionEvent.ACTION_UP) {
+            windBlowing = false;
+        } 
+
+        return false;
     }
 
 }

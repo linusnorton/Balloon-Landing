@@ -15,6 +15,7 @@ public final class R {
     }
     public static final class id {
         public static final int button1=0x7f060001;
+        public static final int button2=0x7f060002;
         public static final int gameView=0x7f060000;
     }
     public static final class integer {
@@ -40,6 +41,7 @@ public final class R {
     }
     public static final class string {
         public static final int app_name=0x7f040001;
+        public static final int burnerButton=0x7f04000e;
         /**  Gravity 
          */
         public static final int gravity=0x7f040002;
@@ -57,6 +59,7 @@ public final class R {
          */
         public static final int wind=0x7f040009;
         public static final int windAcceleration=0x7f04000c;
+        public static final int windButton=0x7f04000f;
         public static final int windDeceleration=0x7f04000d;
         /**   Wind Resistence 
          */

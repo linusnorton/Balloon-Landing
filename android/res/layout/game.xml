@@ -1,9 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<norton.android.balloon.game.GameView
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:id="@+id/gameView"
-  android:orientation="vertical"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"/>
-    
 
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    
+    <norton.android.balloon.game.GameView  
+      android:id="@+id/gameView"
+      android:orientation="vertical"
+      android:layout_height="match_parent" android:layout_width="402dp"/>
+    <RelativeLayout
+        android:layout_height="fill_parent" 
+        android:layout_width="match_parent">
+        <Button 
+            android:id="@+id/button1"
+            android:text="@string/burnerButton"
+            android:layout_height="wrap_content" 
+            android:layout_width="100dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"/>
+        <Button 
+            android:id="@+id/button2"
+            android:text="@string/windButton"
+            android:layout_height="wrap_content" 
+            android:layout_width="100dp" 
+            android:layout_below="@+id/button1" 
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"/>
+    </RelativeLayout>    
+</LinearLayout>
