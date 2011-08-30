@@ -12,10 +12,8 @@ import norton.android.util.graphics.Drawable;
 /**
  * @author Linus Norton <linusnorton@gmail.com>
  */
-public class Train extends Particle implements Drawable {
+public class Train extends Sprite implements Drawable {
     private Paint paint;
-    private int width;
-    private int height;
     
     /**
      * Create train object
@@ -25,15 +23,10 @@ public class Train extends Particle implements Drawable {
      * @param height
      */
     public Train(int x, int y, int width, int height) {
-        super();
+        super(x, y - 10 - height, width, height);
         
         paint = new Paint();
-        paint.setColor(Color.BLUE);
-        
-        this.x = x;
-        this.y = y - 10 - height;
-        this.width = width;
-        this.height = height;        
+        paint.setColor(Color.BLUE);        
     }
     
     /**
@@ -44,31 +37,4 @@ public class Train extends Particle implements Drawable {
         canvas.drawRect(x, y, x + width, y + height, paint);
     }
 
-    /**
-     * @return the width
-     */
-    public int getWidth() {
-        return width;
-    }
-
-    /**
-     * @param width the width to set
-     */
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    /**
-     * @return the height
-     */
-    public int getHeight() {
-        return height;
-    }
-
-    /**
-     * @param height the height to set
-     */
-    public void setHeight(int height) {
-        this.height = height;
-    }    
 }

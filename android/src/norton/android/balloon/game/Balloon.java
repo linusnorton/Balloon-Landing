@@ -6,24 +6,17 @@ import android.graphics.Paint;
 import norton.android.util.geometry.Particle;
 import norton.android.util.graphics.Drawable;
 
-public class Balloon extends Particle implements Drawable {
-    private int width;
-    private int height;
+public class Balloon extends Sprite implements Drawable {
     private Paint paint;
     
     /**
      * Create Balloon 
      */
     public Balloon(int x, int y, int width, int height) {
-        super();
+        super(x, y, width, height);
         
         paint = new Paint();
-        paint.setColor(Color.RED);
-        
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;              
+        paint.setColor(Color.RED);            
     }
 
     /**
@@ -33,33 +26,5 @@ public class Balloon extends Particle implements Drawable {
     public void onDraw(Canvas canvas) {
         canvas.drawRect(x, y, x + width, y + height, paint);
     }
-
-    /**
-     * @return the width
-     */
-    public int getWidth() {
-        return width;
-    }
-
-    /**
-     * @param width the width to set
-     */
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    /**
-     * @return the height
-     */
-    public int getHeight() {
-        return height;
-    }
-
-    /**
-     * @param height the height to set
-     */
-    public void setHeight(int height) {
-        this.height = height;
-    }   
         
 }

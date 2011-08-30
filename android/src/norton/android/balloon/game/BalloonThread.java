@@ -84,21 +84,14 @@ public class BalloonThread extends GameThread implements OnTouchListener {
     }
 
     private void checkCollisions() {
-        Rect bRect = new Rect(
-            (int) balloon.getX(), 
-            (int) balloon.getY(), 
-            balloon.getWidth(), 
-            balloon.getHeight()
-        );
-        Rect tRect = new Rect(
-            (int) train.getX(), 
-            (int) train.getY(), 
-            train.getWidth(), 
-            train.getHeight()
-        );
-        
-        if (Rect.intersects(bRect, tRect)) {
-            end();
+        if (Rect.intersects(balloon.getCollisionMap(), train.getCollisionMap())) {
+            //calculate whether the collision was a successful landing or crash
+            int topDiff = balloon.getBottom() - train.getTop();
+            
+            if (topDiff < 10) {
+                balloon.setY(train.getY() - balloon.getHeight());
+                end();
+            }
         }
     }
     
