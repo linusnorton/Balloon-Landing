@@ -3,4 +3,5 @@
     <string name="app_name">Ballon Landing</string>    
     <string name="burnerButton">Fire ^</string>
     <string name="windButton">Wind ></string>
+    <string name="xmlError">XML error</string>
 </resources>

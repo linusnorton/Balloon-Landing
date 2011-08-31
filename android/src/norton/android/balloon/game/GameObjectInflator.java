@@ -1,9 +1,15 @@
 package norton.android.balloon.game;
 
+import java.io.IOException;
+import java.util.HashMap;
+
+import org.xmlpull.v1.XmlPullParserException;
+
 import norton.android.balloon.R;
 import norton.android.util.geometry.VariableVector;
 import norton.android.util.geometry.Vector;
 import android.content.res.Resources;
+import android.content.res.XmlResourceParser;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.util.Log;
@@ -16,16 +22,46 @@ import android.util.Log;
  */
 public class GameObjectInflator {
     private Resources r;
+	private HashMap<String, Object> values;
     
     /**
      * Create the GameObjectInflator with the given Resources
      * @param r
-     */
-    public GameObjectInflator(Resources resources) {
-        this.r = resources;        
-    }
-    
-    /**
+     * @throws IOException 
+     * @throws XmlPullParserException 
+     */    
+    public GameObjectInflator(Resources resources, final int level) throws XmlPullParserException, IOException {
+    	this.r = resources;
+    	this.values = new HashMap<String, Object>();
+    	
+    	int levelId = r.getIdentifier("level" + Integer.toString(level), "xml", "");
+    	XmlResourceParser xml = r.getXml(levelId);
+    	
+    	parseXML(xml);
+	}
+
+	private void parseXML(XmlResourceParser xrp) throws XmlPullParserException, IOException {
+		while (xrp.getEventType() != XmlResourceParser.END_DOCUMENT) {
+			String key = null;
+			String value = null;
+			
+	        if (xrp.getEventType() == XmlResourceParser.START_TAG) {
+                key = xrp.getAttributeValue(null, "name");		                     		 	 		 
+	        } 		 
+	        else if (xrp.getEventType() == XmlResourceParser.TEXT) {		 		 
+                value = xrp.getText();
+	        }		 
+	        else if (xrp.getEventType() == XmlResourceParser.END_TAG) {
+	        	values.put(key, value);
+	        }
+	        
+	        xrp.next();		 
+		}
+		 
+		xrp.close();
+	}
+
+	/**
      * Inflate the game from the xml configuration
      * @return
      */
@@ -48,10 +84,10 @@ public class GameObjectInflator {
      */
     private Train getTrain() {
         return new Train(
-            r.getInteger(R.integer.trainStartX),
+            (Integer) values.get("trainStartX"),
             r.getDisplayMetrics().heightPixels,
-            r.getInteger(R.integer.trainWidth),
-            r.getInteger(R.integer.trainHeight)
+            (Integer) values.get("trainWidth"),
+            (Integer) values.get("trainHeight")
         );
     }
 
@@ -63,12 +99,12 @@ public class GameObjectInflator {
      */
     private VariableVector getLift() {
         return new VariableVector(
-            r.getInteger(R.integer.liftDirection), 
-            dpToPx(Float.parseFloat(r.getString(R.string.lift))),
-            dpToPx(Float.parseFloat(r.getString(R.string.minimumLift))),
-            dpToPx(Float.parseFloat(r.getString(R.string.maximumLift))),
-            Float.parseFloat(r.getString(R.string.liftAcceleration)),
-            Float.parseFloat(r.getString(R.string.liftDeceleration))
+            (Integer) values.get("liftDirection"), 
+            dpToPx((Float) values.get("lift")),
+            dpToPx((Float) values.get("minimumLift")),
+            dpToPx((Float) values.get("maximumLift")),
+            (Float) values.get("liftAcceleration"),
+            (Float) values.get("liftDeceleration")
         );
     }
 
@@ -79,8 +115,8 @@ public class GameObjectInflator {
      * @return
      */
     private Vector getGravity() {
-        float magnitude = dpToPx(Float.parseFloat(r.getString(R.string.gravity)));
-        return new Vector(r.getInteger(R.integer.gravityDirection), magnitude);
+        float magnitude = dpToPx((Float) values.get("gravity"));
+        return new Vector((Integer) values.get("gravityDirection"), magnitude);
     }
 
     /**
@@ -90,8 +126,8 @@ public class GameObjectInflator {
      * @return
      */
     private Vector getWindResistence() {
-        float magnitude = dpToPx(Float.parseFloat(r.getString(R.string.windResistence)));
-        return new Vector(r.getInteger(R.integer.windReistenceDirection), magnitude);
+        float magnitude = dpToPx((Float) values.get("windResistence"));
+        return new Vector((Integer) values.get("windReistenceDirection"), magnitude);
     }
 
     /**
@@ -101,14 +137,14 @@ public class GameObjectInflator {
      * @return
      */
     private VariableVector getWind() {
-        return new VariableVector(
-                r.getInteger(R.integer.windDirection), 
-                dpToPx(Float.parseFloat(r.getString(R.string.wind))),
-                dpToPx(Float.parseFloat(r.getString(R.string.minimumWind))),
-                dpToPx(Float.parseFloat(r.getString(R.string.maximumWind))),
-                Float.parseFloat(r.getString(R.string.windAcceleration)),
-                Float.parseFloat(r.getString(R.string.windDeceleration))
-            );
+    	return new VariableVector(
+            (Integer) values.get("windDirection"), 
+            dpToPx((Float) values.get("wind")),
+            dpToPx((Float) values.get("minimumWind")),
+            dpToPx((Float) values.get("maximumWind")),
+            (Float) values.get("windAcceleration"),
+            (Float) values.get("windDeceleration")
+        );        
     }
 
     /**
@@ -118,10 +154,10 @@ public class GameObjectInflator {
      * @return
      */
     private Balloon getBalloon() {
-        int width = (int) dpToPx(r.getInteger(R.integer.balloonWidth));
-        int height = (int) dpToPx(r.getInteger(R.integer.balloonHeight));
-        int x = (int) dpToPx(r.getInteger(R.integer.balloonStartX));
-        int y = (int) dpToPx(r.getInteger(R.integer.ballooonStartY));
+        int width = (int) dpToPx((Integer) values.get("balloonWidth"));
+        int height = (int) dpToPx((Integer) values.get("balloonHeight"));
+        int x = (int) dpToPx((Integer) values.get("balloonStartX"));
+        int y = (int) dpToPx((Integer) values.get("ballooonStartY"));
         
         return new Balloon(x, y, width, height);
     }
