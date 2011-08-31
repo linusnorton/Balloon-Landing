@@ -1,6 +1,7 @@
 package norton.android.balloon.game;
 
 import norton.android.balloon.R;
+import norton.android.util.geometry.VariableVector;
 import norton.android.util.geometry.Vector;
 import android.content.res.Resources;
 import android.graphics.Bitmap;

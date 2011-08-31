@@ -13,7 +13,7 @@ import android.widget.Button;
  * 
  * @author Linus Norton <linusnorton@gmail.com>
  */
-public class GameActivity extends Activity {
+public class GameActivity extends Activity implements GameListener {
     private GameView view;
     private BalloonThread game;
     
@@ -33,7 +33,9 @@ public class GameActivity extends Activity {
      */
     private void init() {
         GameObjectInflator inflator = new GameObjectInflator(getResources());
+        
         game = inflator.getGameThread();
+        game.setGameListener(this);
         
         view = (GameView)findViewById(R.id.gameView);
         view.setOnTouchListener(game);
@@ -55,6 +57,22 @@ public class GameActivity extends Activity {
     public void onDestroy() {
         super.onDestroy();
         game.end();
+    }
+
+    /**
+     * Level was a success
+     */
+    @Override
+    public void onLevelSuccess() {
+        // TODO Auto-generated method stub        
+    }
+
+    /**
+     * Level failed
+     */
+    @Override
+    public void onLevelFailed() {
+        // TODO Auto-generated method stub        
     }   
     
 }

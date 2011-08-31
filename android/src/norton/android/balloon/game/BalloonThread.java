@@ -13,6 +13,7 @@ import android.view.View.OnKeyListener;
 import android.view.View.OnTouchListener;
 import norton.android.balloon.R;
 import norton.android.util.game.GameThread;
+import norton.android.util.geometry.VariableVector;
 import norton.android.util.geometry.Vector;
 import norton.android.util.graphics.Drawable;
 
@@ -34,6 +35,7 @@ public class BalloonThread extends GameThread implements OnTouchListener {
     private boolean windBlowing;
     private int maxHeight;
     private int maxWidth;
+    private GameListener listener;    
     
     /**
      * Create the game thread
@@ -90,7 +92,11 @@ public class BalloonThread extends GameThread implements OnTouchListener {
             
             if (topDiff < 10) {
                 balloon.setY(train.getY() - balloon.getHeight());
-                end();
+                
+                levelComplete();                    
+            }
+            else {
+                levelFailed();
             }
         }
     }
@@ -101,6 +107,10 @@ public class BalloonThread extends GameThread implements OnTouchListener {
     private void checkBounds() {
         if (balloon.getX() < 5) {
             balloon.setX(5);
+        }
+        
+        if (balloon.getX() > maxWidth) {
+            balloon.setX(maxWidth);
         }
         
         if (balloon.getY() > maxHeight) {
@@ -166,6 +176,34 @@ public class BalloonThread extends GameThread implements OnTouchListener {
         } 
 
         return false;
+    }
+    
+    /**
+     * Level was successfully completed so notify the listeners
+     */
+    private void levelComplete() {
+        if (listener != null) {
+            listener.onLevelSuccess();
+            end();
+        }
+    }
+    
+    /**
+     * Level was failed, notify listeners
+     */
+    private void levelFailed() {
+        if (listener != null) {
+            listener.onLevelFailed();
+            end();
+        }        
+    }
+
+    /**
+     * Set the game listener
+     * @param gameListener
+     */
+    public void setGameListener(GameListener gameListener) {
+        listener = gameListener;
     }
 
 }
