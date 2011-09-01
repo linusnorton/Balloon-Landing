@@ -4,6 +4,7 @@ import norton.android.balloon.R;
 import android.app.Activity;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -54,8 +55,9 @@ public class GameActivity extends Activity implements GameListener {
             game.setRenderer(view);
             new Thread(game).start();
     	}
-    	catch(Exception e) {
-    		Toast.makeText(this, R.string.xmlError, Toast.LENGTH_LONG);
+    	catch(Exception e) {    		
+    		Log.e("MakeLevel", Log.getStackTraceString(e));
+    		Toast.makeText(getApplicationContext(), R.string.xmlError, Toast.LENGTH_LONG);
     	}        
     }
     
@@ -65,7 +67,10 @@ public class GameActivity extends Activity implements GameListener {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        game.end();
+        
+        if (game != null) {
+        	game.end();
+        }
     }
 
     /**
@@ -73,7 +78,8 @@ public class GameActivity extends Activity implements GameListener {
      */
     @Override
     public void onLevelSuccess() {
-        // TODO Auto-generated method stub        
+        level++;
+        startLevel();
     }
 
     /**
