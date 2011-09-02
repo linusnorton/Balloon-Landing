@@ -2,6 +2,8 @@ package norton.android.balloon.game;
 
 import norton.android.balloon.R;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,13 +32,13 @@ public class GameActivity extends Activity implements GameListener {
                              WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.game);
         level = 1;
-        startLevel();
+        initLevel();
     }
     
     /**
      * Create a new BalloonThread, init the surface and set the game going
      */
-    private void startLevel() {    	
+    private void initLevel() {    	
     	try {
         	GameObjectInflator inflator = new GameObjectInflator(getResources(), level);
         	
@@ -53,12 +55,25 @@ public class GameActivity extends Activity implements GameListener {
             button2.setOnTouchListener(game);
             
             game.setRenderer(view);
-            new Thread(game).start();
+            startLevel();
     	}
     	catch(Exception e) {    		
     		Log.e("MakeLevel", Log.getStackTraceString(e));
     		Toast.makeText(getApplicationContext(), R.string.xmlError, Toast.LENGTH_LONG);
     	}        
+    }
+    
+    private void startLevel() {
+    	AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    	builder.setMessage("Land the balloon on the train. Use the burner to go up and wind to go right.")
+    		   .setTitle("Level " + Integer.toString(level))
+    	       .setCancelable(false)
+    	       .setPositiveButton("Let's Go!", new DialogInterface.OnClickListener() {
+    	           public void onClick(DialogInterface dialog, int id) {
+    	        	   new Thread(game).start();
+    	           }
+    	       });
+    	builder.create().show();
     }
     
     /**
@@ -79,7 +94,7 @@ public class GameActivity extends Activity implements GameListener {
     @Override
     public void onLevelSuccess() {
         level++;
-        startLevel();
+        initLevel();
     }
 
     /**
