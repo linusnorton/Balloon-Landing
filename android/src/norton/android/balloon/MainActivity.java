@@ -1,5 +1,7 @@
 package norton.android.balloon;
 
+import com.google.android.apps.analytics.GoogleAnalyticsTracker;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -7,7 +9,9 @@ import android.os.Bundle;
 import android.view.View;
 
 public class MainActivity extends Activity {
+	private static final String GOOGLE_ACCOUNT = "UA-25579809-1";	
 	private static int maxLevel;
+	public static GoogleAnalyticsTracker tracker;
 	
     /** Called when the activity is first created. */
     @Override
@@ -17,6 +21,10 @@ public class MainActivity extends Activity {
         
         SharedPreferences settings = getPreferences(0);
         maxLevel = settings.getInt("maxLevel", 1);
+        
+        tracker = GoogleAnalyticsTracker.getInstance();
+        tracker.start(GOOGLE_ACCOUNT, 20, this);
+        tracker.trackPageView("/home");
     }
     
     @Override

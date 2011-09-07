@@ -17,8 +17,12 @@ public class LevelSelectorActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.level_selector);
-        firstLevel = (getIntent().getExtras().getInt("world") - 1) * LEVELS_PER_WORLD;
-        enableButtons();
+        
+        int world = getIntent().getExtras().getInt("world");
+        firstLevel = (world - 1) * LEVELS_PER_WORLD;
+        
+        enableButtons();        
+        MainActivity.tracker.trackPageView("/world" + Integer.toString(world));
     }
     
     /**

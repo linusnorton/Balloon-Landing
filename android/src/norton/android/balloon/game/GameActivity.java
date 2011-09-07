@@ -1,5 +1,6 @@
 package norton.android.balloon.game;
 
+import norton.android.balloon.MainActivity;
 import norton.android.balloon.R;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -31,6 +32,8 @@ public class GameActivity extends Activity implements GameListener {
                              WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.game);
         level = getIntent().getExtras().getInt("level");
+        MainActivity.tracker.trackPageView("/level" + Integer.toString(level));
+        
         initLevel();
     }
     

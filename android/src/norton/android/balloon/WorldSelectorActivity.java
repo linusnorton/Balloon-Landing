@@ -14,6 +14,7 @@ public class WorldSelectorActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.world_selector);
         enableButtons();
+        MainActivity.tracker.trackPageView("/world-selector");
     }
     
     /**
