@@ -31,7 +31,7 @@ public class GameActivity extends Activity implements GameListener {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
                              WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.game);
-        level = 1;
+        level = getIntent().getExtras().getInt("level");
         initLevel();
     }
     
@@ -93,8 +93,9 @@ public class GameActivity extends Activity implements GameListener {
      */
     @Override
     public void onLevelSuccess() {
-        level++;
-        initLevel();
+        //level++;
+        //initLevel();
+        finish();
     }
 
     /**
@@ -102,7 +103,7 @@ public class GameActivity extends Activity implements GameListener {
      */
     @Override
     public void onLevelFailed() {
-        // TODO Auto-generated method stub        
+        finish();        
     }   
     
 }

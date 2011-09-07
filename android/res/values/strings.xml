@@ -4,4 +4,13 @@
     <string name="burnerButton">Fire ^</string>
     <string name="windButton">Wind ></string>
     <string name="xmlError">XML error</string>
+    <string name="world1">World 1</string>
+    <string name="world2">World 2</string>
+    <string name="world3">World 3</string>
+    <string name="level1">Level 1</string>
+    <string name="level2">Level 2</string>
+    <string name="level3">Level 3</string>
+    <string name="level4">Level 4</string>
+    <string name="level5">Level 5</string>
+    <string name="newGame">New Game</string>
 </resources>
