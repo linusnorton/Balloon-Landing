@@ -4,7 +4,6 @@ import norton.android.balloon.R;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
@@ -93,8 +92,6 @@ public class GameActivity extends Activity implements GameListener {
      */
     @Override
     public void onLevelSuccess() {
-        //level++;
-        //initLevel();
         this.setResult(RESULT_OK);
         finish();
     }
@@ -107,5 +104,5 @@ public class GameActivity extends Activity implements GameListener {
         this.setResult(RESULT_CANCELED);
         finish();        
     }   
-    
+        
 }

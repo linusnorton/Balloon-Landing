@@ -3,16 +3,15 @@ package norton.android.balloon.game;
 import java.io.IOException;
 import java.util.HashMap;
 
-import org.xmlpull.v1.XmlPullParserException;
-
-import norton.android.balloon.R;
 import norton.android.util.geometry.VariableVector;
 import norton.android.util.geometry.Vector;
+
+import org.xmlpull.v1.XmlPullParserException;
+
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
-import android.util.Log;
 
 /**
  * This class uses the given XML configuration to create
