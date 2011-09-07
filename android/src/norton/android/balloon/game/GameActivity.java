@@ -95,6 +95,7 @@ public class GameActivity extends Activity implements GameListener {
     public void onLevelSuccess() {
         //level++;
         //initLevel();
+        this.setResult(RESULT_OK);
         finish();
     }
 
@@ -103,6 +104,7 @@ public class GameActivity extends Activity implements GameListener {
      */
     @Override
     public void onLevelFailed() {
+        this.setResult(RESULT_CANCELED);
         finish();        
     }   
     
