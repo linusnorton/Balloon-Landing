@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+    <Button android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/button1" android:layout_alignParentBottom="true" android:layout_alignParentRight="true" android:layout_marginRight="20dp" android:layout_marginBottom="18dp" android:text="@string/test"></Button>
+    <Button android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/button2" android:layout_alignBaseline="@+id/button1" android:layout_alignBottom="@+id/button1" android:layout_toLeftOf="@+id/button1" android:layout_marginRight="16dp" android:text="@string/save"></Button>
+    <Button android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/button3" android:layout_alignBottom="@+id/button2" android:layout_alignParentLeft="true" android:layout_marginLeft="25dp" android:text="@string/cancel"></Button>
+    <ScrollView android:layout_width="wrap_content" android:id="@+id/scrollView1" android:layout_height="wrap_content" android:layout_alignParentTop="true" android:layout_alignParentLeft="true" android:layout_alignParentRight="true" android:layout_marginLeft="15dp" android:layout_marginRight="15dp" android:layout_marginTop="15dp" android:layout_above="@+id/button1">
+        <TableLayout android:layout_height="fill_parent" android:layout_width="fill_parent">
+        	<TableRow>
+	        	<TextView android:layout_column="1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium" android:text="@string/levelName"></TextView>
+	        	<EditText android:id="@+id/editText1" android:layout_weight="1" android:layout_width="fill_parent" android:layout_height="wrap_content">
+	        		<requestFocus></requestFocus>
+	        	</EditText>
+	        	
+        	</TableRow>
+            <TableRow>
+                <TextView android:layout_column="1" android:id="@+id/textView1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium" android:text="@string/balloonSize"></TextView>	                               
+	            <SeekBar android:id="@+id/seekBar1" android:layout_weight="1" android:layout_height="wrap_content" android:layout_width="fill_parent"></SeekBar>
+            </TableRow>
+            <TableRow>
+                <TextView android:layout_column="1" android:id="@+id/textView2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium" android:text="@string/trainSize"></TextView>
+                <SeekBar android:layout_height="wrap_content" android:layout_weight="1" android:id="@+id/seekBar2" android:layout_width="fill_parent"></SeekBar>
+            </TableRow>
+            <TableRow>
+                <TextView android:layout_column="1" android:id="@+id/textView3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium" android:text="@string/windStrength"></TextView>
+                <SeekBar android:layout_height="wrap_content" android:layout_weight="1" android:id="@+id/seekBar3" android:layout_width="fill_parent"></SeekBar>            
+            </TableRow>
+            <TableRow>
+                <TextView android:layout_column="1" android:id="@+id/textView4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium" android:text="@string/windResistance"></TextView>
+                <SeekBar android:layout_height="wrap_content" android:layout_weight="1" android:id="@+id/seekBar4" android:layout_width="fill_parent"></SeekBar>            
+            </TableRow>
+            <TableRow>
+                <TextView android:layout_column="1" android:id="@+id/textView5" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium" android:text="@string/gravity"></TextView>
+                <SeekBar android:layout_height="wrap_content" android:layout_weight="1" android:id="@+id/seekBar5" android:layout_width="fill_parent"></SeekBar>            
+            </TableRow>            
+            <TableRow>
+                <TextView android:layout_column="1" android:id="@+id/textView6" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium" android:text="@string/burnerStrength"></TextView>
+                <SeekBar android:layout_height="wrap_content" android:layout_weight="1" android:id="@+id/seekBar6" android:layout_width="fill_parent"></SeekBar>            
+            </TableRow>
+       </TableLayout>
+       
+    </ScrollView>
+    
+</RelativeLayout>

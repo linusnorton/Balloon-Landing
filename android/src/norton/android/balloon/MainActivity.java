@@ -1,5 +1,8 @@
 package norton.android.balloon;
 
+import norton.android.balloon.customlevels.CustomLevelsActivity;
+import norton.android.balloon.game.WorldSelectorActivity;
+
 import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 
 import android.app.Activity;
@@ -48,6 +51,15 @@ public class MainActivity extends Activity {
         Intent intent = new Intent(this, WorldSelectorActivity.class);
         startActivity(intent);
     }
+    
+    /**
+     * Launch custom levels activity
+     * @param view
+     */
+    public void launchCustomLevels(View view) {
+        Intent intent = new Intent(this, CustomLevelsActivity.class);
+        startActivity(intent);
+    }    
     
     /**
      * return the last level the user has unlocked.

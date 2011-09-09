@@ -13,4 +13,20 @@
     <string name="level4">Level 4</string>
     <string name="level5">Level 5</string>
     <string name="newGame">New Game</string>
+    <string name="customLevel">Custom Levels</string>
+    <string name="availableLevels">Available Levels:</string>
+    <string name="play">Play</string>
+    <string name="delete">Delete</string>
+    <string name="create">Create</string>
+    <string name="download">Download</string>
+    <string name="balloonSize">Balloon Size:</string>
+    <string name="trainSize">Train Size:</string>
+    <string name="windStrength">Wind Strength:</string>
+    <string name="levelName">Level Name:</string>
+    <string name="windResistance">Wind Resistance:</string>
+    <string name="gravity">Gravity:</string>
+    <string name="burnerStrength">Burner Strength:</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="test">Test</string>
 </resources>
