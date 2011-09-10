@@ -76,19 +76,6 @@ public class GameObjectInflator {
             getLift()
         );
     }
-    
-    /**
-     * Create train object
-     * @return
-     */
-    private Train getTrain() {
-        return new Train(
-            Integer.parseInt(values.get("trainStartX")),
-            r.getDisplayMetrics().heightPixels,
-            Integer.parseInt(values.get("trainWidth")),
-            Integer.parseInt(values.get("trainHeight"))
-        );
-    }
 
     /**
      * Create the lift from the xml config. 
@@ -99,9 +86,9 @@ public class GameObjectInflator {
     private VariableVector getLift() {
         return new VariableVector(
             Integer.parseInt(values.get("liftDirection")), 
-            dpToPx(Float.parseFloat(values.get("lift"))),
-            dpToPx(Float.parseFloat(values.get("minimumLift"))),
-            dpToPx(Float.parseFloat(values.get("maximumLift"))),
+            dpToPx(values.get("lift")),
+            dpToPx(values.get("minimumLift")),
+            dpToPx(values.get("maximumLift")),
             Float.parseFloat(values.get("liftAcceleration")),
             Float.parseFloat(values.get("liftDeceleration"))
         );
@@ -114,7 +101,7 @@ public class GameObjectInflator {
      * @return
      */
     private Vector getGravity() {
-        float magnitude = dpToPx(Float.parseFloat(values.get("gravity")));
+        float magnitude = dpToPx(values.get("gravity"));
         return new Vector(Integer.parseInt(values.get("gravityDirection")), magnitude);
     }
 
@@ -125,7 +112,7 @@ public class GameObjectInflator {
      * @return
      */
     private Vector getWindResistence() {
-        float magnitude = dpToPx(Float.parseFloat(values.get("windResistence")));
+        float magnitude = dpToPx(values.get("windResistence"));
         return new Vector(Integer.parseInt(values.get("windReistenceDirection")), magnitude);
     }
 
@@ -138,9 +125,9 @@ public class GameObjectInflator {
     private VariableVector getWind() {
     	return new VariableVector(
             Integer.parseInt(values.get("windDirection")), 
-            dpToPx(Float.parseFloat(values.get("wind"))),
-            dpToPx(Float.parseFloat(values.get("minimumWind"))),
-            dpToPx(Float.parseFloat(values.get("maximumWind"))),
+            dpToPx(values.get("wind")),
+            dpToPx(values.get("minimumWind")),
+            dpToPx(values.get("maximumWind")),
             Float.parseFloat(values.get("windAcceleration")),
             Float.parseFloat(values.get("windDeceleration"))
         );        
@@ -153,13 +140,27 @@ public class GameObjectInflator {
      * @return
      */
     private Balloon getBalloon() {
-        int width = (int) dpToPx(Integer.parseInt(values.get("balloonWidth")));
-        int height = (int) dpToPx(Integer.parseInt(values.get("balloonHeight")));
-        int x = (int) dpToPx(Integer.parseInt(values.get("balloonStartX")));
-        int y = (int) dpToPx(Integer.parseInt(values.get("ballooonStartY")));
+        int width = (int) dpToPx(values.get("balloonWidth"));
+        int height = (int) dpToPx(values.get("balloonHeight"));
+        int x = (int) dpToPx(values.get("balloonStartX"));
+        int y = (int) dpToPx(values.get("ballooonStartY"));
         
         return new Balloon(x, y, width, height);
     }
+    
+    
+    /**
+     * Create train object
+     * @return
+     */
+    private Train getTrain() {
+        return new Train(
+            (int) dpToPx(values.get("trainStartX")),
+            r.getDisplayMetrics().heightPixels,
+            (int) dpToPx(values.get("trainWidth")),
+            (int) dpToPx(values.get("trainHeight"))
+        );
+    }    
     
     /**
      * Resize the given bitmap image
@@ -197,5 +198,14 @@ public class GameObjectInflator {
      */
     private float dpToPx(float dp) {
         return 0.5f + dp * r.getDisplayMetrics().density;
+    }
+    
+    /**
+     * Overloaded to take a string
+     * @param dp
+     * @return
+     */
+    private float dpToPx(String dp) {
+    	return dpToPx(Float.parseFloat(dp));
     }
 }

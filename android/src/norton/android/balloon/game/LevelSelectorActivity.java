@@ -1,11 +1,16 @@
-package norton.android.balloon;
+package norton.android.balloon.game;
 
-import norton.android.balloon.game.GameActivity;
+import norton.android.balloon.MainActivity;
+import norton.android.balloon.R;
+import norton.android.balloon.R.id;
+import norton.android.balloon.R.layout;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 
 public class LevelSelectorActivity extends Activity {
@@ -16,8 +21,13 @@ public class LevelSelectorActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.level_selector);
         
+        requestWindowFeature(Window.FEATURE_NO_TITLE);        
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
+                             WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        
+        setContentView(R.layout.level_selector);
+
         int world = getIntent().getExtras().getInt("world");
         firstLevel = (world - 1) * LEVELS_PER_WORLD;
         
