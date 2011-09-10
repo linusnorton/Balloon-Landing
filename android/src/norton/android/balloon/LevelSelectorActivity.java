@@ -81,7 +81,7 @@ public class LevelSelectorActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         if (resultCode == RESULT_OK && requestCode >= MainActivity.getMaxLevel()) {
             MainActivity.setMaxLevel(requestCode + 1);
-        	enableButtons();
+            enableButtons();
         }        
     }
     
@@ -89,32 +89,32 @@ public class LevelSelectorActivity extends Activity {
      * Use the maxLevel to work out what levels are enabled
      */
     private void enableButtons() {
-    	int maxButtonIndex = MainActivity.getMaxLevel() - firstLevel;
-    	
-    	if (maxButtonIndex >= 1) {
-    		Button b = (Button)findViewById(R.id.button4);
+        int maxButtonIndex = MainActivity.getMaxLevel() - firstLevel;
+        
+        if (maxButtonIndex >= 1) {
+            Button b = (Button)findViewById(R.id.button4);
             b.setEnabled(true);
-    	}
-    	
-    	if (maxButtonIndex >= 2) {
-    		Button b = (Button)findViewById(R.id.button5);
+        }
+        
+        if (maxButtonIndex >= 2) {
+            Button b = (Button)findViewById(R.id.button5);
             b.setEnabled(true);
-    	}
-    	
-    	if (maxButtonIndex >= 3) {
-    		Button b = (Button)findViewById(R.id.button6);
+        }
+        
+        if (maxButtonIndex >= 3) {
+            Button b = (Button)findViewById(R.id.button6);
             b.setEnabled(true);
-    	}
-    	
-    	if (maxButtonIndex >= 4) {
-    		Button b = (Button)findViewById(R.id.button7);
+        }
+        
+        if (maxButtonIndex >= 4) {
+            Button b = (Button)findViewById(R.id.button7);
             b.setEnabled(true);
-    	}
-    	
-    	if (maxButtonIndex >= 5) {
-    		Button b = (Button)findViewById(R.id.button8);
+        }
+        
+        if (maxButtonIndex >= 5) {
+            Button b = (Button)findViewById(R.id.button8);
             b.setEnabled(true);
-    	}    	
+        }
     }
     
 }
