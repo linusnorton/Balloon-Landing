@@ -1,11 +1,10 @@
 package norton.android.balloon.game;
 
+import norton.android.util.game.Sprite;
+import norton.android.util.graphics.Drawable;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import norton.android.util.game.Sprite;
-import norton.android.util.geometry.Particle;
-import norton.android.util.graphics.Drawable;
 
 public class Balloon extends Sprite implements Drawable {
     private Paint paint;

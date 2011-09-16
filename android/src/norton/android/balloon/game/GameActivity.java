@@ -2,6 +2,7 @@ package norton.android.balloon.game;
 
 import norton.android.balloon.MainActivity;
 import norton.android.balloon.R;
+import norton.android.util.game.GameThread;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -19,8 +20,7 @@ import android.widget.Toast;
  * @author Linus Norton <linusnorton@gmail.com>
  */
 public class GameActivity extends Activity implements GameListener {
-    private GameView view;
-    private BalloonThread game;
+    private GameThread thread;
     private int level;
     
     /** Called when the activity is first created. */
@@ -43,23 +43,30 @@ public class GameActivity extends Activity implements GameListener {
     /**
      * Create a new BalloonThread, init the surface and set the game going
      */
-    private void initLevel() {    	
+    private void initLevel() {
+    	thread = new GameThread();
+    	
     	try {
         	GameObjectInflator inflator = new GameObjectInflator(getResources(), level);
-        	
-            game = inflator.getGameThread();
+
+            BalloonGame game = inflator.getBalloonGame();
             game.setGameListener(this);
-            
-            view = (GameView)findViewById(R.id.gameView);
-            view.setOnTouchListener(game);
             
             Button button1 = (Button)findViewById(R.id.button1);
             button1.setOnTouchListener(game);
             
             Button button2 = (Button)findViewById(R.id.button2);
             button2.setOnTouchListener(game);
+
+            GameView view = (GameView)findViewById(R.id.gameView);
+            view.setOnTouchListener(game);
             
-            game.setRenderer(view);
+            view.addScene(inflator.getBackground());            
+            view.addScene(game);            
+            
+            thread.addTickListener(view);
+            thread.addTickListener(game);            
+            
             startLevel();
     	}
     	catch(Exception e) {    		
@@ -75,7 +82,7 @@ public class GameActivity extends Activity implements GameListener {
     	       .setCancelable(false)
     	       .setPositiveButton("Let's Go!", new DialogInterface.OnClickListener() {
     	           public void onClick(DialogInterface dialog, int id) {
-    	        	   new Thread(game).start();
+    	        	   new Thread(thread).start();
     	           }
     	       });
     	builder.create().show();
@@ -88,8 +95,8 @@ public class GameActivity extends Activity implements GameListener {
     public void onDestroy() {
         super.onDestroy();
         
-        if (game != null) {
-        	game.end();
+        if (thread != null) {
+        	thread.end();
         }
     }
 

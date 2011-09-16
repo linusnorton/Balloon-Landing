@@ -2,15 +2,20 @@ package norton.android.balloon.game;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import norton.android.util.geometry.VariableVector;
 import norton.android.util.geometry.Vector;
+import norton.android.util.graphics.BackgroundLayer;
+import norton.android.util.graphics.ParallaxScrollingBackground;
+import norton.android.util.graphics.Scene;
 
 import org.xmlpull.v1.XmlPullParserException;
 
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 
 /**
@@ -64,8 +69,8 @@ public class GameObjectInflator {
      * Inflate the game from the xml configuration
      * @return
      */
-    public BalloonThread getGameThread() {        
-        return new BalloonThread(
+    public BalloonGame getBalloonGame() {        
+        return new BalloonGame(
             r.getDisplayMetrics().heightPixels,
             r.getDisplayMetrics().widthPixels,
             getBalloon(),
@@ -208,4 +213,14 @@ public class GameObjectInflator {
     private float dpToPx(String dp) {
     	return dpToPx(Float.parseFloat(dp));
     }
+
+	public Scene getBackground() {
+		Bitmap image = BitmapFactory.decodeResource(r, r.getIdentifier("image", "drawable", "norton.android.balloon"));
+		BackgroundLayer layer = new BackgroundLayer(image, 0, 100);
+		
+		HashSet<BackgroundLayer> layers = new HashSet<BackgroundLayer>();
+		layers.add(layer);
+		
+		return new ParallaxScrollingBackground(layers);
+	}
 }

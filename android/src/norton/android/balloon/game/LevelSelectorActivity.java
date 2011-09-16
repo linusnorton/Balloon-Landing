@@ -2,12 +2,9 @@ package norton.android.balloon.game;
 
 import norton.android.balloon.MainActivity;
 import norton.android.balloon.R;
-import norton.android.balloon.R.id;
-import norton.android.balloon.R.layout;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;

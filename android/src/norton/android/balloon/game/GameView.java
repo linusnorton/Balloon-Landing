@@ -1,14 +1,15 @@
 package norton.android.balloon.game;
 
+import java.util.Set;
+
+import norton.android.util.game.OnTickListener;
 import norton.android.util.graphics.Drawable;
 import norton.android.util.graphics.Renderer;
 import norton.android.util.graphics.Scene;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -17,8 +18,9 @@ import android.view.SurfaceView;
  * 
  * @author Linus Norton <linusnorton@gmail.com>
  */
-public class GameView extends SurfaceView implements SurfaceHolder.Callback, Renderer {
-
+public class GameView extends SurfaceView implements SurfaceHolder.Callback, OnTickListener, Renderer {
+	private Set<Scene> scenes;
+	
     /**
      * Constructor
      * @param context
@@ -45,23 +47,29 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Ren
     public void surfaceDestroyed(SurfaceHolder holder) {
         // TODO Auto-generated method stub
         
-    }
+    }    
 
     /**
      * Draw the game to the surface
      */
-    @Override
-    public void render(Scene scene) {
+    public void onTick() {
         Canvas canvas = getHolder().lockCanvas();
         
         if (canvas != null) {            
             canvas.drawColor(Color.WHITE);
-            
-            for (Drawable d : scene.getDrawables()) {
-                d.onDraw(canvas);
+
+            for (Scene s : scenes) {
+	            for (Drawable d : s.getDrawables()) {
+	                d.onDraw(canvas);
+	            }
             }
             getHolder().unlockCanvasAndPost(canvas);                   
         }
     }
+
+	@Override
+	public void addScene(Scene scene) {
+		scenes.add(scene);
+	}
 
 }

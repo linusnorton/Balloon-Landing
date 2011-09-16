@@ -3,19 +3,16 @@ package norton.android.balloon.game;
 import java.util.HashSet;
 import java.util.Set;
 
-import android.graphics.Rect;
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnKeyListener;
-import android.view.View.OnTouchListener;
 import norton.android.balloon.R;
-import norton.android.util.game.GameThread;
+import norton.android.util.game.OnTickListener;
 import norton.android.util.geometry.VariableVector;
 import norton.android.util.geometry.Vector;
 import norton.android.util.graphics.Drawable;
+import norton.android.util.graphics.Scene;
+import android.graphics.Rect;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnTouchListener;
 
 /**
  * This class contains the main game logic. The parent class calls the tick method
@@ -23,7 +20,7 @@ import norton.android.util.graphics.Drawable;
  * 
  * @author Linus Norton <linusnorton@gmail.com>
  */
-public class BalloonThread extends GameThread implements OnTouchListener {
+public class BalloonGame implements OnTouchListener, OnTickListener, Scene {
     private HashSet<Drawable> drawables;
     private Balloon balloon;
     private Train train;
@@ -48,7 +45,7 @@ public class BalloonThread extends GameThread implements OnTouchListener {
      * @param gravity
      * @param lift
      */
-    public BalloonThread(int heightPixels, 
+    public BalloonGame(int heightPixels, 
                          int widthPixels, 
                          Balloon balloon, 
                          Train train,
@@ -77,8 +74,7 @@ public class BalloonThread extends GameThread implements OnTouchListener {
     /**
      * Main game loop, apply the forces to the balloon
      */
-    @Override
-    protected void tick() {
+    public void onTick() {
         applyVectors();               
         updateVariableVectors();        
         checkBounds();
@@ -138,7 +134,7 @@ public class BalloonThread extends GameThread implements OnTouchListener {
     }
 
     /**
-     * Apply the wind, wind resistence, gravity and lift
+     * Apply the wind, wind resistance, gravity and lift
      */
     private void applyVectors() {
         //apply the constant forces
@@ -184,7 +180,6 @@ public class BalloonThread extends GameThread implements OnTouchListener {
     private void levelComplete() {
         if (listener != null) {
             listener.onLevelSuccess();
-            end();
         }
     }
     
@@ -194,7 +189,6 @@ public class BalloonThread extends GameThread implements OnTouchListener {
     private void levelFailed() {
         if (listener != null) {
             listener.onLevelFailed();
-            end();
         }        
     }
 
