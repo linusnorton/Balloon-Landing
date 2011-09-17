@@ -32,4 +32,5 @@
     <string name="windAcceleration">0.2</string>
     <string name="windDeceleration">0.05</string>
 
+    <string name="theme">summer</string>
 </resources>

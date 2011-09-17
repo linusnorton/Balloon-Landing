@@ -1,7 +1,6 @@
 package norton.android.balloon.game;
 
-import java.util.Set;
-
+import java.util.LinkedHashSet;
 import norton.android.util.game.OnTickListener;
 import norton.android.util.graphics.Drawable;
 import norton.android.util.graphics.Renderer;
@@ -19,7 +18,7 @@ import android.view.SurfaceView;
  * @author Linus Norton <linusnorton@gmail.com>
  */
 public class GameView extends SurfaceView implements SurfaceHolder.Callback, OnTickListener, Renderer {
-	private Set<Scene> scenes;
+	private LinkedHashSet<Scene> scenes;
 	
     /**
      * Constructor
@@ -28,6 +27,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, OnT
      */
     public GameView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        scenes = new LinkedHashSet<Scene>();
     }
 
     @Override

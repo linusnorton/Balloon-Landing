@@ -3,6 +3,8 @@ package norton.android.balloon.game;
 import norton.android.balloon.MainActivity;
 import norton.android.balloon.R;
 import norton.android.util.game.GameThread;
+import norton.android.util.graphics.ParallaxScrollingBackground;
+import norton.android.util.graphics.Scene;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -48,7 +50,8 @@ public class GameActivity extends Activity implements GameListener {
     	
     	try {
         	GameObjectInflator inflator = new GameObjectInflator(getResources(), level);
-
+        	ParallaxScrollingBackground background = inflator.getBackground();
+        	
             BalloonGame game = inflator.getBalloonGame();
             game.setGameListener(this);
             
@@ -61,17 +64,19 @@ public class GameActivity extends Activity implements GameListener {
             GameView view = (GameView)findViewById(R.id.gameView);
             view.setOnTouchListener(game);
             
-            view.addScene(inflator.getBackground());            
+            view.addScene(background);            
             view.addScene(game);            
             
             thread.addTickListener(view);
+            thread.addTickListener(background);            
             thread.addTickListener(game);            
             
             startLevel();
     	}
     	catch(Exception e) {    		
     		Log.e("MakeLevel", Log.getStackTraceString(e));
-    		Toast.makeText(getApplicationContext(), R.string.xmlError, Toast.LENGTH_LONG);
+    		Toast.makeText(getApplicationContext(), R.string.xmlError, Toast.LENGTH_LONG).show();
+    		finish();
     	}        
     }
     

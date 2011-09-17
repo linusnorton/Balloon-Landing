@@ -3,7 +3,9 @@ package norton.android.balloon.game;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 
+import norton.android.balloon.R;
 import norton.android.util.geometry.VariableVector;
 import norton.android.util.geometry.Vector;
 import norton.android.util.graphics.BackgroundLayer;
@@ -175,25 +177,12 @@ public class GameObjectInflator {
      * @param newHeight
      * @return resized bitmap
      */
-    private Bitmap getResizedBitmap(Bitmap bm, int newWidth, int newHeight) {
-        newWidth = (int) dpToPx(newWidth);
-        newHeight = (int) dpToPx(newHeight);
-        
-        int width = bm.getWidth();
-        int height = bm.getHeight();
-
-        float scaleWidth = ((float) newWidth) / width;
-        float scaleHeight = ((float) newHeight) / height;
-
-        // create a matrix for the manipulation
-        Matrix matrix = new Matrix();
-
-        // resize the bit map
-        matrix.postScale(scaleWidth, scaleHeight);
-
+    private Bitmap getResizedBitmapByHeight(Bitmap bm, int newHeight) {      
+        float scale = ((float) newHeight) / bm.getHeight();
+        int width = (int) (bm.getWidth() * scale);
         // recreate the new Bitmap
-        return Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
-    }
+        return Bitmap.createScaledBitmap(bm, width, newHeight, true);
+    }    
     
     /**
      * Convert dp to px for this display
@@ -214,11 +203,14 @@ public class GameObjectInflator {
     	return dpToPx(Float.parseFloat(dp));
     }
 
-	public Scene getBackground() {
-		Bitmap image = BitmapFactory.decodeResource(r, r.getIdentifier("image", "drawable", "norton.android.balloon"));
-		BackgroundLayer layer = new BackgroundLayer(image, 0, 100);
+	public ParallaxScrollingBackground getBackground() {
+		int id = r.getIdentifier(values.get("theme")+"_layer1", "drawable", "norton.android.balloon");
+	    Bitmap image = BitmapFactory.decodeResource(r, id);
+	    
+	    image = getResizedBitmapByHeight(image, r.getDisplayMetrics().heightPixels);
+		BackgroundLayer layer = new BackgroundLayer(image, 0.5f, 0);
 		
-		HashSet<BackgroundLayer> layers = new HashSet<BackgroundLayer>();
+		LinkedHashSet<BackgroundLayer> layers = new LinkedHashSet<BackgroundLayer>();
 		layers.add(layer);
 		
 		return new ParallaxScrollingBackground(layers);
