@@ -12,25 +12,27 @@
     <integer name="trainStartX">180</integer>
     
     <!-- Gravity -->
-    <string name="gravity">9.8</string>
+    <string name="gravity">5</string>
     <integer name="gravityDirection">90</integer> 
     <!--  Wind Resistence -->
-    <string name="windResistence">6</string>
+    <string name="windResistence">4</string>
     <integer name="windReistenceDirection">180</integer>
     <!-- Lift -->
-    <string name="lift">9.8</string>
+    <string name="lift">5</string>
     <integer name="liftDirection">270</integer>
     <string name="maximumLift">14</string>
-    <string name="minimumLift">8</string>
-    <string name="liftAcceleration">0.2</string>
-    <string name="liftDeceleration">0.05</string>
+    <string name="minimumLift">1</string>
+    <string name="liftAcceleration">0.05</string>
+    <string name="liftDeceleration">0.02</string>
     <!-- Wind -->
     <string name="wind">5</string>
     <integer name="windDirection">0</integer>
     <string name="maximumWind">12</string>
-    <string name="minimumWind">4</string>
-    <string name="windAcceleration">0.2</string>
-    <string name="windDeceleration">0.05</string>
+    <string name="minimumWind">1</string>
+    <string name="windAcceleration">0.05</string>
+    <string name="windDeceleration">0.02</string>
 
+	<!--  Background -->
     <string name="theme">summer</string>
+    <string name="scrollSpeed">0.5</string>
 </resources>

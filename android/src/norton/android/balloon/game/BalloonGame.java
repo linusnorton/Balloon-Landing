@@ -45,19 +45,18 @@ public class BalloonGame implements OnTouchListener, OnTickListener, Scene {
      * @param gravity
      * @param lift
      */
-    public BalloonGame(int heightPixels, 
-                         int widthPixels, 
-                         Balloon balloon, 
-                         Train train,
-                         VariableVector wind,
-                         Vector windResistence,
-                         Vector gravity,
-                         VariableVector lift) {
+    public BalloonGame(int widthPixels, 
+                       Balloon balloon, 
+                       Train train,
+                       VariableVector wind,
+                       Vector windResistence,
+                       Vector gravity,
+                       VariableVector lift) {
         super();
 
         this.burnerOn = false;
         this.windBlowing = false;
-        this.maxHeight = heightPixels - 10 - balloon.getHeight();
+        this.maxHeight = train.getBottom();
         this.maxWidth = widthPixels;
         this.balloon = balloon;
         this.train = train;
@@ -86,7 +85,7 @@ public class BalloonGame implements OnTouchListener, OnTickListener, Scene {
             //calculate whether the collision was a successful landing or crash
             int topDiff = balloon.getBottom() - train.getTop();
             
-            if (topDiff < 10) {
+            if (topDiff < 5) {
                 balloon.setY(train.getY() - balloon.getHeight());
                 
                 levelComplete();                    
@@ -94,6 +93,10 @@ public class BalloonGame implements OnTouchListener, OnTickListener, Scene {
             else {
                 levelFailed();
             }
+        }
+        
+        if (balloon.getBottom() > maxHeight) {
+        	levelFailed();
         }
     }
     

@@ -73,7 +73,6 @@ public class GameObjectInflator {
      */
     public BalloonGame getBalloonGame() {        
         return new BalloonGame(
-            r.getDisplayMetrics().heightPixels,
             r.getDisplayMetrics().widthPixels,
             getBalloon(),
             getTrain(),
@@ -205,10 +204,11 @@ public class GameObjectInflator {
 
 	public ParallaxScrollingBackground getBackground() {
 		int id = r.getIdentifier(values.get("theme")+"_layer1", "drawable", "norton.android.balloon");
-	    Bitmap image = BitmapFactory.decodeResource(r, id);
-	    
+		float scrollSpeed = Float.parseFloat(values.get("scrollSpeed"));
+		
+		Bitmap image = BitmapFactory.decodeResource(r, id);	    
 	    image = getResizedBitmapByHeight(image, r.getDisplayMetrics().heightPixels);
-		BackgroundLayer layer = new BackgroundLayer(image, 0.5f, 0);
+		BackgroundLayer layer = new BackgroundLayer(image, scrollSpeed, 0);
 		
 		LinkedHashSet<BackgroundLayer> layers = new LinkedHashSet<BackgroundLayer>();
 		layers.add(layer);

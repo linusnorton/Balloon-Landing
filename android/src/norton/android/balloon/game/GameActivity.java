@@ -1,10 +1,9 @@
 package norton.android.balloon.game;
 
-import norton.android.balloon.MainActivity;
+
 import norton.android.balloon.R;
 import norton.android.util.game.GameThread;
 import norton.android.util.graphics.ParallaxScrollingBackground;
-import norton.android.util.graphics.Scene;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -37,7 +36,6 @@ public class GameActivity extends Activity implements GameListener {
         setContentView(R.layout.game);
         
         level = getIntent().getExtras().getInt("level");
-        MainActivity.tracker.trackPageView("/level" + Integer.toString(level));
         
         initLevel();
     }
@@ -82,10 +80,10 @@ public class GameActivity extends Activity implements GameListener {
     
     private void startLevel() {
     	AlertDialog.Builder builder = new AlertDialog.Builder(this);
-    	builder.setMessage("Land the balloon on the train. Use the burner to go up and wind to go right.")
-    		   .setTitle("Level " + Integer.toString(level))
+    	builder.setMessage(R.string.introText)
+    		   .setTitle(getResources().getString(R.string.level) + " " + Integer.toString(level))
     	       .setCancelable(false)
-    	       .setPositiveButton("Let's Go!", new DialogInterface.OnClickListener() {
+    	       .setPositiveButton(R.string.letsGo, new DialogInterface.OnClickListener() {
     	           public void onClick(DialogInterface dialog, int id) {
     	        	   new Thread(thread).start();
     	           }
@@ -94,24 +92,30 @@ public class GameActivity extends Activity implements GameListener {
     }
     
     /**
-     * Stop the game thread
-     */
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        
-        if (thread != null) {
-        	thread.end();
-        }
-    }
-
-    /**
      * Level was a success
      */
     @Override
     public void onLevelSuccess() {
-        this.setResult(RESULT_OK);
-        finish();
+    	if (thread != null) {
+        	thread.end();
+        }
+        
+    	runOnUiThread(new Runnable() {
+    	    public void run() {
+    	    	AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
+    	    	builder.setMessage(R.string.wellDone)
+    	    		   .setTitle(getResources().getString(R.string.success))
+    	    	       .setCancelable(false)
+    	    	       .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+    	    	           public void onClick(DialogInterface dialog, int id) {
+    	    	               setResult(RESULT_OK);
+    	    	               dialog.dismiss();
+    	    	               finish();        
+    	    	           }
+    	    	       });
+    	    	builder.create().show();
+    	    }
+    	});
     }
 
     /**
@@ -119,8 +123,26 @@ public class GameActivity extends Activity implements GameListener {
      */
     @Override
     public void onLevelFailed() {
-        this.setResult(RESULT_CANCELED);
-        finish();        
+        if (thread != null) {
+        	thread.end();
+        }
+    	
+    	runOnUiThread(new Runnable() {
+    	    public void run() {
+    	    	AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
+    	    	builder.setMessage(R.string.failed)
+    	    		   .setTitle(getResources().getString(R.string.crash))
+    	    	       .setCancelable(false)
+    	    	       .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+    	    	           public void onClick(DialogInterface dialog, int id) {
+    	    	               setResult(RESULT_CANCELED);
+    	    	               dialog.dismiss();
+    	    	               finish();        
+    	    	           }
+    	    	       });
+    	    	builder.create().show();
+    	    }
+    	});    	    	
     }   
         
 }

@@ -3,7 +3,6 @@
  */
 package norton.android.balloon.customlevels;
 
-import norton.android.balloon.MainActivity;
 import norton.android.balloon.R;
 import android.app.Activity;
 import android.content.Intent;
@@ -27,7 +26,6 @@ public class CustomLevelsActivity extends Activity {
                              WindowManager.LayoutParams.FLAG_FULLSCREEN);
         
         setContentView(R.layout.custom_levels);
-        MainActivity.tracker.trackPageView("/custom-levels");
     }
     
     public void createLevel(View view) {

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Ballon Landing</string>    
+    <string name="app_name">Balloon Landing</string>    
     <string name="burnerButton">Fire ^</string>
     <string name="windButton">Wind ></string>
     <string name="xmlError">XML error</string>
@@ -29,4 +29,12 @@
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
     <string name="test">Test</string>
+    <string name="level">Level</string>
+    <string name="introText">Land the balloon on the train. Use the burner to go up and wind to go right.</string>
+    <string name="letsGo">Let\'s Go!</string>
+    <string name="crash">Crash!</string>
+    <string name="failed">Oh no! You crashed!</string>
+    <string name="ok">OK</string>
+    <string name="success">Success!</string>
+    <string name="wellDone">Well done! You landed safely, on to the next level!</string>
 </resources>

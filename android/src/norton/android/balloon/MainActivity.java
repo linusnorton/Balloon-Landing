@@ -16,7 +16,7 @@ import android.view.WindowManager;
 public class MainActivity extends Activity {
 	private static final String GOOGLE_ACCOUNT = "UA-25579809-1";	
 	private static int maxLevel;
-	public static GoogleAnalyticsTracker tracker;
+	private GoogleAnalyticsTracker tracker;
 	
     /** Called when the activity is first created. */
     @Override
@@ -33,7 +33,7 @@ public class MainActivity extends Activity {
         maxLevel = settings.getInt("maxLevel", 1);
         
         tracker = GoogleAnalyticsTracker.getInstance();
-        tracker.start(GOOGLE_ACCOUNT, 20, this);
+        tracker.start(GOOGLE_ACCOUNT, 20, getApplication());
         tracker.trackPageView("/home");
     }
     

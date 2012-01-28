@@ -24,7 +24,6 @@ public class WorldSelectorActivity extends Activity {
         setContentView(R.layout.world_selector);
         
         enableButtons();
-        MainActivity.tracker.trackPageView("/world-selector");
     }
     
     /**

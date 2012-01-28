@@ -1,5 +1,7 @@
 package norton.android.balloon.customlevels;
 
+import com.google.android.apps.analytics.GoogleAnalyticsTracker;
+
 import norton.android.balloon.MainActivity;
 import norton.android.balloon.R;
 import android.app.Activity;
@@ -18,6 +20,6 @@ public class CreateLevelActivity extends Activity {
                              WindowManager.LayoutParams.FLAG_FULLSCREEN);
         
         setContentView(R.layout.create_level);
-        MainActivity.tracker.trackPageView("/create-level");
+        GoogleAnalyticsTracker.getInstance().trackPageView("/create-level");
     }
 }

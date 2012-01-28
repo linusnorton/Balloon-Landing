@@ -32,5 +32,7 @@
     <string name="windAcceleration">0.2</string>
     <string name="windDeceleration">0.09</string>
 
+	<!--  Background -->
     <string name="theme">summer</string>
+    <string name="scrollSpeed">0.5</string>
 </resources>

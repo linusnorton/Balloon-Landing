@@ -29,7 +29,6 @@ public class LevelSelectorActivity extends Activity {
         firstLevel = (world - 1) * LEVELS_PER_WORLD;
         
         enableButtons();        
-        MainActivity.tracker.trackPageView("/world" + Integer.toString(world));
     }
     
     /**
