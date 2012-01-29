@@ -151,7 +151,10 @@ public class GameObjectInflator {
         int x = (int) dpToPx(values.get("balloonStartX"));
         int y = (int) dpToPx(values.get("ballooonStartY"));
         
-        return new Balloon(x, y, width, height);
+        Bitmap balloon = BitmapFactory.decodeResource(r, R.drawable.balloon);
+        balloon = getResizedBitmapByHeight(balloon, height);
+        
+        return new Balloon(x, y, balloon);
     }
     
     

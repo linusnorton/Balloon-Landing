@@ -2,21 +2,21 @@ package norton.android.balloon.game;
 
 import norton.android.util.game.Sprite;
 import norton.android.util.graphics.Drawable;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
+import android.util.Log;
 
 public class Balloon extends Sprite implements Drawable {
-    private Paint paint;
+    private Bitmap image;
     
     /**
      * Create Balloon 
      */
-    public Balloon(int x, int y, int width, int height) {
-        super(x, y, width, height);
+    public Balloon(int x, int y, Bitmap image) {
+        super(x, y, image.getWidth(), image.getHeight());
         
-        paint = new Paint();
-        paint.setColor(Color.RED);            
+        this.image = image;
     }
 
     /**
@@ -24,7 +24,17 @@ public class Balloon extends Sprite implements Drawable {
      */
     @Override
     public void onDraw(Canvas canvas) {
-        canvas.drawRect(x, y, x + width, y + height, paint);
+        canvas.drawBitmap(image, x, y, null);        
     }
+    
+    /**
+     * If the given pixel is not transparent then it is filled
+     * @param x
+     * @param y
+     * @return
+     */
+    public boolean isFilled(int x, int y) {
+        return image.getPixel(x, y) != Color.TRANSPARENT;
+    }    
         
 }

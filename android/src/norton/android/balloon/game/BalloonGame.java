@@ -81,7 +81,7 @@ public class BalloonGame implements OnTouchListener, OnTickListener, Scene {
     }
 
     private void checkCollisions() {
-        if (Rect.intersects(balloon.getCollisionMap(), train.getCollisionMap())) {
+        if (areColliding(balloon, train)) {        	
             //calculate whether the collision was a successful landing or crash
             int topDiff = balloon.getBottom() - train.getTop();
             
@@ -98,6 +98,24 @@ public class BalloonGame implements OnTouchListener, OnTickListener, Scene {
         if (balloon.getBottom() > maxHeight) {
         	levelFailed();
         }
+    }
+    
+    private boolean areColliding(Balloon balloon, Train train) {
+    	int left = Math.max(balloon.getLeft(), train.getLeft());
+		int right = Math.min(balloon.getRight(), train.getRight());
+		int top = Math.max(balloon.getTop(), train.getTop());
+		int bottom = Math.min(balloon.getBottom(), train.getBottom());
+
+		for (int x = left; x < right; x++) {
+		    for (int y = top; y < bottom; y++) {
+		        if (balloon.isFilled(x - balloon.getLeft(), y - balloon.getTop()) && 
+	        		train.isFilled(x - train.getLeft(), y - train.getTop())) {
+		        	return true;
+		        }
+		    }
+		}
+		
+		return false; 
     }
     
     /**
