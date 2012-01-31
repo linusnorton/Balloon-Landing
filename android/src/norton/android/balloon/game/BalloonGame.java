@@ -10,6 +10,7 @@ import norton.android.util.geometry.Vector;
 import norton.android.util.graphics.Drawable;
 import norton.android.util.graphics.Scene;
 import android.graphics.Rect;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -25,14 +26,16 @@ public class BalloonGame implements OnTouchListener, OnTickListener, Scene {
     private Balloon balloon;
     private Train train;
     private VariableVector wind;
-    private Vector windResistence;
+    private VariableVector windResistence;
     private Vector gravity;
     private VariableVector lift;
     private boolean burnerOn;
     private boolean windBlowing;
     private int maxHeight;
     private int maxWidth;
-    private GameListener listener;    
+    private GameListener listener;
+	private int windChangeFrequency;
+	private boolean windChangingDirection;    
     
     /**
      * Create the game thread
@@ -49,13 +52,13 @@ public class BalloonGame implements OnTouchListener, OnTickListener, Scene {
                        Balloon balloon, 
                        Train train,
                        VariableVector wind,
-                       Vector windResistence,
+                       VariableVector windResistence,
                        Vector gravity,
-                       VariableVector lift) {
-        super();
-
+                       VariableVector lift,
+                       int windChangeFrequency) {
         this.burnerOn = false;
         this.windBlowing = false;
+        this.windChangingDirection = false;
         this.maxHeight = train.getBottom();
         this.maxWidth = widthPixels;
         this.balloon = balloon;
@@ -64,6 +67,7 @@ public class BalloonGame implements OnTouchListener, OnTickListener, Scene {
         this.windResistence = windResistence;
         this.gravity = gravity;
         this.lift = lift;
+        this.windChangeFrequency = windChangeFrequency;
 
         drawables = new HashSet<Drawable>();
         drawables.add(balloon);
@@ -75,12 +79,25 @@ public class BalloonGame implements OnTouchListener, OnTickListener, Scene {
      */
     public void onTick() {
         applyVectors();               
-        updateVariableVectors();        
+        updateVariableVectors();
+        changeWindDirection();
         checkBounds();
         checkCollisions();
     }
 
-    private void checkCollisions() {
+    private void changeWindDirection() {
+    	// if were changing direction and have come to a stop
+    	if (windChangingDirection && windResistence.getMagnitude() == 0) {
+    		// change direction and start to accelerate again
+    		windResistence.setDirection((int) (135 + (Math.random() * 90)));
+    		windChangingDirection = false;
+    	}
+    	else if (windChangeFrequency >= (int) (Math.random() * 1000))  {
+			windChangingDirection = true;
+    	}
+	}
+
+	private void checkCollisions() {
         if (areColliding(balloon, train)) {        	
             //calculate whether the collision was a successful landing or crash
             int topDiff = balloon.getBottom() - train.getTop();
@@ -100,6 +117,13 @@ public class BalloonGame implements OnTouchListener, OnTickListener, Scene {
         }
     }
     
+	/**
+	 * Calculate the over crossing areas and scan each pixel for a collision
+	 * 
+	 * @param balloon
+	 * @param train
+	 * @return
+	 */
     private boolean areColliding(Balloon balloon, Train train) {
     	int left = Math.max(balloon.getLeft(), train.getLeft());
 		int right = Math.min(balloon.getRight(), train.getRight());
@@ -152,16 +176,22 @@ public class BalloonGame implements OnTouchListener, OnTickListener, Scene {
         else {
             wind.decelerate();
         }
+        
+        if (windChangingDirection) {
+        	windResistence.decelerate();
+        	wind.decelerate();
+        }
+        else {
+        	windResistence.accelerate();
+        }
     }
 
     /**
      * Apply the wind, wind resistance, gravity and lift
      */
     private void applyVectors() {
-        //apply the constant forces
         balloon.applyVector(gravity);
         balloon.applyVector(windResistence);
-        //apply the variable forces
         balloon.applyVector(lift);
         balloon.applyVector(wind);
     }

@@ -41,13 +41,31 @@ public class GameActivity extends Activity implements GameListener {
     }
     
     /**
+     * Pause the game thread
+     */
+    @Override
+    public void onPause() {
+    	super.onPause();
+    	thread.pause();
+    }
+    
+    /**
+     * Unpause the game thread
+     */
+    @Override
+    public void onResume() {
+    	super.onResume();
+    	thread.unPause();
+    }
+    
+    /**
      * Create a new BalloonThread, init the surface and set the game going
      */
     private void initLevel() {
     	thread = new GameThread();
     	
     	try {
-        	GameObjectInflator inflator = new GameObjectInflator(getResources(), level);
+        	GameObjectInflater inflator = new GameObjectInflater(getResources(), level);
         	ParallaxScrollingBackground background = inflator.getBackground();
         	
             BalloonGame game = inflator.getBalloonGame();
@@ -135,7 +153,7 @@ public class GameActivity extends Activity implements GameListener {
     	    	       .setCancelable(false)
     	    	       .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
     	    	           public void onClick(DialogInterface dialog, int id) {
-    	    	               setResult(RESULT_CANCELED);
+    	    	               setResult(RESULT_CANCELED); 
     	    	               dialog.dismiss();
     	    	               finish();        
     	    	           }
