@@ -1,22 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources >
     <!-- Balloon -->
-    <integer name="balloonWidth">40</integer>
-    <integer name="balloonHeight">40</integer>
-    <integer name="balloonStartX">140</integer>
+    <integer name="balloonHeight">60</integer>
+    <integer name="balloonStartX">40</integer>
     <integer name="ballooonStartY">140</integer>
     
     <!-- Train -->
-    <integer name="trainWidth">40</integer>
-    <integer name="trainHeight">40</integer>
-    <integer name="trainStartX">180</integer>
+    <integer name="trainWidth">70</integer>
+    <integer name="trainHeight">20</integer>
+    <integer name="trainStartX">200</integer>
     
     <!-- Gravity -->
     <string name="gravity">5</string>
     <integer name="gravityDirection">90</integer> 
+    
     <!--  Wind Resistence -->
     <string name="windResistence">4</string>
     <integer name="windReistenceDirection">180</integer>
+    <integer name="windChangeFrequency">10</integer>
+    <string name="windChangeSpeed">0.02</string>
+    
     <!-- Lift -->
     <string name="lift">5</string>
     <integer name="liftDirection">270</integer>
@@ -25,7 +28,7 @@
     <string name="liftAcceleration">0.05</string>
     <string name="liftDeceleration">0.02</string>
     <!-- Wind -->
-    <string name="wind">5</string>
+    <string name="wind">4</string>
     <integer name="windDirection">0</integer>
     <string name="maximumWind">12</string>
     <string name="minimumWind">1</string>
@@ -34,5 +37,5 @@
 
 	<!--  Background -->
     <string name="theme">summer</string>
-    <string name="scrollSpeed">0.5</string>
+    <string name="scrollSpeed">3</string>
 </resources>
