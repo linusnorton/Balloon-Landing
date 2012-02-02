@@ -79,8 +79,7 @@ public class GameObjectInflater {
             getWind(), 
             getWindResistence(), 
             getGravity(),
-            getLift(),
-            Integer.parseInt(values.get("windChangeFrequency"))
+            getLift()
         );
     }
 
@@ -118,14 +117,15 @@ public class GameObjectInflater {
      * Note that magnitudes are scaled by the dpToPx conversion
      * @return
      */
-    private VariableVector getWindResistence() {
-        return new VariableVector(
+    private WindResistence getWindResistence() {
+        return new WindResistence(
     		Integer.parseInt(values.get("windReistenceDirection")), 
     		dpToPx(values.get("windResistence")),
     		0,
     		dpToPx(values.get("windResistence")),
     		Float.parseFloat(values.get("windChangeSpeed")),
-    		Float.parseFloat(values.get("windChangeSpeed"))
+    		Float.parseFloat(values.get("windChangeSpeed")),
+    		Integer.parseInt(values.get("windChangeFrequency"))
 		);
     }
 
@@ -162,8 +162,7 @@ public class GameObjectInflater {
         
         return new Balloon(x, y, balloon);
     }
-    
-    
+        
     /**
      * Create train object
      * @return

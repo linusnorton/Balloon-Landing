@@ -9,6 +9,7 @@
     <integer name="trainWidth">70</integer>
     <integer name="trainHeight">20</integer>
     <integer name="trainStartX">200</integer>
+    <integer name="trainSpeed">1</integer>
     
     <!-- Gravity -->
     <string name="gravity">5</string>

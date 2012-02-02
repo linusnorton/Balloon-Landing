@@ -65,10 +65,10 @@ public class GameActivity extends Activity implements GameListener {
     	thread = new GameThread();
     	
     	try {
-        	GameObjectInflater inflator = new GameObjectInflater(getResources(), level);
-        	ParallaxScrollingBackground background = inflator.getBackground();
+        	GameObjectInflater inflater = new GameObjectInflater(getResources(), level);
+        	ParallaxScrollingBackground background = inflater.getBackground();
         	
-            BalloonGame game = inflator.getBalloonGame();
+            BalloonGame game = inflater.getBalloonGame();
             game.setGameListener(this);
             
             Button button1 = (Button)findViewById(R.id.button1);

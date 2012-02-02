@@ -5,7 +5,6 @@ import norton.android.util.graphics.Drawable;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.util.Log;
 
 public class Balloon extends Sprite implements Drawable {
     private Bitmap image;

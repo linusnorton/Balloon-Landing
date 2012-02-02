@@ -37,14 +37,4 @@ public class Train extends Sprite implements Drawable {
         canvas.drawRect(x, y, x + width, y + height, paint);
     }
 
-    /**
-     * 
-     * @param x
-     * @param y
-     * @return
-     */
-	public boolean isFilled(int x, int y) {
-		return true; 
-	}
-
 }

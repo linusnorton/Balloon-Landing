@@ -2,15 +2,12 @@ package norton.android.balloon.game;
 
 import java.util.HashSet;
 import java.util.Set;
-
 import norton.android.balloon.R;
 import norton.android.util.game.OnTickListener;
 import norton.android.util.geometry.VariableVector;
 import norton.android.util.geometry.Vector;
 import norton.android.util.graphics.Drawable;
 import norton.android.util.graphics.Scene;
-import android.graphics.Rect;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -26,7 +23,7 @@ public class BalloonGame implements OnTouchListener, OnTickListener, Scene {
     private Balloon balloon;
     private Train train;
     private VariableVector wind;
-    private VariableVector windResistence;
+    private WindResistence windResistence;
     private Vector gravity;
     private VariableVector lift;
     private boolean burnerOn;
@@ -34,14 +31,11 @@ public class BalloonGame implements OnTouchListener, OnTickListener, Scene {
     private int maxHeight;
     private int maxWidth;
     private GameListener listener;
-	private int windChangeFrequency;
-	private boolean windChangingDirection;    
     
     /**
      * Create the game thread
      * @param widthPixels 
      * @param heightPixels 
-     * 
      * @param balloon
      * @param wind
      * @param windResistence
@@ -52,13 +46,11 @@ public class BalloonGame implements OnTouchListener, OnTickListener, Scene {
                        Balloon balloon, 
                        Train train,
                        VariableVector wind,
-                       VariableVector windResistence,
+                       WindResistence windResistence,
                        Vector gravity,
-                       VariableVector lift,
-                       int windChangeFrequency) {
+                       VariableVector lift) {
         this.burnerOn = false;
         this.windBlowing = false;
-        this.windChangingDirection = false;
         this.maxHeight = train.getBottom();
         this.maxWidth = widthPixels;
         this.balloon = balloon;
@@ -67,7 +59,6 @@ public class BalloonGame implements OnTouchListener, OnTickListener, Scene {
         this.windResistence = windResistence;
         this.gravity = gravity;
         this.lift = lift;
-        this.windChangeFrequency = windChangeFrequency;
 
         drawables = new HashSet<Drawable>();
         drawables.add(balloon);
@@ -80,25 +71,13 @@ public class BalloonGame implements OnTouchListener, OnTickListener, Scene {
     public void onTick() {
         applyVectors();               
         updateVariableVectors();
-        changeWindDirection();
+        windResistence.rollForChange();
         checkBounds();
         checkCollisions();
     }
 
-    private void changeWindDirection() {
-    	// if were changing direction and have come to a stop
-    	if (windChangingDirection && windResistence.getMagnitude() == 0) {
-    		// change direction and start to accelerate again
-    		windResistence.setDirection((int) (135 + (Math.random() * 90)));
-    		windChangingDirection = false;
-    	}
-    	else if (windChangeFrequency >= (int) (Math.random() * 1000))  {
-			windChangingDirection = true;
-    	}
-	}
-
 	private void checkCollisions() {
-        if (areColliding(balloon, train)) {        	
+        if (balloon.isCollidingWith(train)) {        	
             //calculate whether the collision was a successful landing or crash
             int topDiff = balloon.getBottom() - train.getTop();
             
@@ -115,32 +94,7 @@ public class BalloonGame implements OnTouchListener, OnTickListener, Scene {
         if (balloon.getBottom() > maxHeight) {
         	levelFailed();
         }
-    }
-    
-	/**
-	 * Calculate the over crossing areas and scan each pixel for a collision
-	 * 
-	 * @param balloon
-	 * @param train
-	 * @return
-	 */
-    private boolean areColliding(Balloon balloon, Train train) {
-    	int left = Math.max(balloon.getLeft(), train.getLeft());
-		int right = Math.min(balloon.getRight(), train.getRight());
-		int top = Math.max(balloon.getTop(), train.getTop());
-		int bottom = Math.min(balloon.getBottom(), train.getBottom());
-
-		for (int x = left; x < right; x++) {
-		    for (int y = top; y < bottom; y++) {
-		        if (balloon.isFilled(x - balloon.getLeft(), y - balloon.getTop()) && 
-	        		train.isFilled(x - train.getLeft(), y - train.getTop())) {
-		        	return true;
-		        }
-		    }
-		}
-		
-		return false; 
-    }
+    }    
     
     /**
      * Make sure the balloon isn't out of bounds 
@@ -170,20 +124,14 @@ public class BalloonGame implements OnTouchListener, OnTickListener, Scene {
             lift.decelerate();
         }
         
-        if (windBlowing) {
+        if (windBlowing && !windResistence.isChangingDirection()) {
             wind.accelerate();
         }
         else {
             wind.decelerate();
         }
         
-        if (windChangingDirection) {
-        	windResistence.decelerate();
-        	wind.decelerate();
-        }
-        else {
-        	windResistence.accelerate();
-        }
+        windResistence.updateVariableVectors();
     }
 
     /**
