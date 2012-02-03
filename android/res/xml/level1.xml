@@ -18,22 +18,24 @@
     <!--  Wind Resistence -->
     <string name="windResistence">4</string>
     <integer name="windReistenceDirection">180</integer>
-    <integer name="windChangeFrequency">10</integer>
-    <string name="windChangeSpeed">0.02</string>
+    <integer name="windChangeFrequency">0</integer>
+    <string name="windChangeSpeed">0</string>
+    <string name="minimumWindResistence">4</string>
+    <string name="maximumWindResistence">4</string>
     
     <!-- Lift -->
     <string name="lift">5</string>
     <integer name="liftDirection">270</integer>
-    <string name="maximumLift">14</string>
+    <string name="maximumLift">10</string>
     <string name="minimumLift">1</string>
     <string name="liftAcceleration">0.05</string>
     <string name="liftDeceleration">0.02</string>
     <!-- Wind -->
     <string name="wind">4</string>
     <integer name="windDirection">0</integer>
-    <string name="maximumWind">12</string>
+    <string name="maximumWind">8</string>
     <string name="minimumWind">1</string>
-    <string name="windAcceleration">0.05</string>
+    <string name="windAcceleration">0.08</string>
     <string name="windDeceleration">0.02</string>
 
 	<!--  Background -->

@@ -9,67 +9,80 @@ import norton.android.util.geometry.VariableVector;
  */
 public class WindResistence extends VariableVector {
 
-    private boolean changingDirection;
-	private int changeFrequency;
+    private boolean changing;
+    private int changeFrequency;
+    private float newMaxSpeed;
+    private float minWindSpeed;
+	private float maxWindSpeed;
 
-	/**
-	 * 
-	 * @param direction
-	 * @param magnitude
-	 * @param minSpeed
-	 * @param maxSpeed
-	 * @param acceleration
-	 * @param deceleration
-	 */
-	public WindResistence(float direction, 
-						  float magnitude, 
-						  float minSpeed,
+    /**
+     * 
+     * @param direction
+     * @param magnitude
+     * @param minSpeed
+     * @param maxSpeed
+     * @param acceleration
+     * @param deceleration
+     */
+    public WindResistence(float direction, 
+                          float magnitude, 
+                          float minSpeed,
                           float maxSpeed, 
                           float acceleration, 
                           float deceleration,
-                          int changeFrequency) {
+                          int changeFrequency,
+                          float minWindSpeed,
+                          float maxWindSpeed) {
         super(direction, magnitude, minSpeed, maxSpeed, acceleration, deceleration);
         
-        changingDirection = false;
+        changing = false;
+        newMaxSpeed = maxSpeed;        
+        
+        this.minWindSpeed = minWindSpeed;
+        this.maxWindSpeed = maxWindSpeed;
         this.changeFrequency = changeFrequency;
     }
     
-	/**
-	 * Roll for a change in direction
-	 */
+    /**
+     * Roll for a change 
+     */
     public void rollForChange() {
-    	// if were changing direction and have come to a stop
-    	if (changingDirection && magnitude == 0) {
-    		// change direction and start to accelerate again
-    		direction = (int) (135 + (Math.random() * 90));
-    		changingDirection = false;
-    	}
-    	else if (changeFrequency >= (int) (Math.random() * 1000))  {
-			changingDirection = true;
-    	}
-	}
+        if (changing && newMaxSpeed == magnitude) {            
+            changing = false;
+            maxSpeed = newMaxSpeed;
+        }
+        else if (changeFrequency >= (int) (Math.random() * 1000))  {
+            changing = true;
+            newMaxSpeed = minWindSpeed + (float) Math.random() * (maxWindSpeed - minWindSpeed);
+            
+            if (newMaxSpeed > maxSpeed) {
+            	maxSpeed = newMaxSpeed;
+            }
+        }
+    }
 
     /**
-     * Decelerates if changing direction
+     * Decelerates if changing direction and new speed is lower, otherwise
+     * accelerates until maximum speed
      * 
      * @param wind
      */
-	public void updateVariableVectors() {
-        if (changingDirection) {
-        	decelerate();
+    public void update() {
+        if (changing && magnitude > newMaxSpeed) {
+            decelerate();
         }
         else {
-        	accelerate();
+            accelerate();
         }
-		
-	}
+        
+    }
 
-	/**
-	 * Is the wind in the process of changing direction
-	 * 
-	 * @return
-	 */
-	public boolean isChangingDirection() {
-		return changingDirection;
-	}
+    /**
+     * Is the wind in the process of changing direction
+     * 
+     * @return
+     */
+    public boolean isChanging() {
+        return changing;
+    }
 }

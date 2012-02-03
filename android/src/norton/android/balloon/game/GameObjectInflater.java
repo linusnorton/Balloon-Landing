@@ -125,7 +125,9 @@ public class GameObjectInflater {
     		dpToPx(values.get("windResistence")),
     		Float.parseFloat(values.get("windChangeSpeed")),
     		Float.parseFloat(values.get("windChangeSpeed")),
-    		Integer.parseInt(values.get("windChangeFrequency"))
+    		Integer.parseInt(values.get("windChangeFrequency")),
+    		dpToPx(values.get("minimumWindResistence")),
+    		dpToPx(values.get("maximumWindResistence"))
 		);
     }
 
@@ -172,7 +174,10 @@ public class GameObjectInflater {
             (int) dpToPx(values.get("trainStartX")),
             r.getDisplayMetrics().heightPixels,
             (int) dpToPx(values.get("trainWidth")),
-            (int) dpToPx(values.get("trainHeight"))
+            (int) dpToPx(values.get("trainHeight")),
+            (int) dpToPx(values.get("trainSpeed")),
+            0,
+            r.getDisplayMetrics().widthPixels - (int) dpToPx(values.get("trainWidth"))
         );
     }    
     

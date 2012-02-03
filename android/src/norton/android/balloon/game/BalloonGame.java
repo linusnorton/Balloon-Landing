@@ -8,6 +8,7 @@ import norton.android.util.geometry.VariableVector;
 import norton.android.util.geometry.Vector;
 import norton.android.util.graphics.Drawable;
 import norton.android.util.graphics.Scene;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -69,15 +70,16 @@ public class BalloonGame implements OnTouchListener, OnTickListener, Scene {
      * Main game loop, apply the forces to the balloon
      */
     public void onTick() {
-        applyVectors();               
+        applyVectors();           
         updateVariableVectors();
         windResistence.rollForChange();
+        train.move();
         checkBounds();
         checkCollisions();
     }
 
-	private void checkCollisions() {
-        if (balloon.isCollidingWith(train)) {        	
+    private void checkCollisions() {
+        if (balloon.isCollidingWith(train)) {            
             //calculate whether the collision was a successful landing or crash
             int topDiff = balloon.getBottom() - train.getTop();
             
@@ -92,7 +94,7 @@ public class BalloonGame implements OnTouchListener, OnTickListener, Scene {
         }
         
         if (balloon.getBottom() > maxHeight) {
-        	levelFailed();
+            levelFailed();
         }
     }    
     
@@ -124,14 +126,14 @@ public class BalloonGame implements OnTouchListener, OnTickListener, Scene {
             lift.decelerate();
         }
         
-        if (windBlowing && !windResistence.isChangingDirection()) {
+        if (windBlowing) {
             wind.accelerate();
         }
         else {
             wind.decelerate();
         }
         
-        windResistence.updateVariableVectors();
+        windResistence.update();
     }
 
     /**
