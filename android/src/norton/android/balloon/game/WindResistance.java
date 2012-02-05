@@ -7,7 +7,7 @@ import norton.android.util.geometry.VariableVector;
  * 
  * @author Linus Norton <linusnorton@gmail.com>
  */
-public class WindResistence extends VariableVector {
+public class WindResistance extends VariableVector {
 
     private boolean changing;
     private int changeFrequency;
@@ -24,7 +24,7 @@ public class WindResistence extends VariableVector {
      * @param acceleration
      * @param deceleration
      */
-    public WindResistence(float direction, 
+    public WindResistance(float direction, 
                           float magnitude, 
                           float minSpeed,
                           float maxSpeed, 

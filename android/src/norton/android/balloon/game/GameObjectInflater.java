@@ -77,7 +77,7 @@ public class GameObjectInflater {
             getBalloon(),
             getTrain(),
             getWind(), 
-            getWindResistence(), 
+            getWindResistance(), 
             getGravity(),
             getLift()
         );
@@ -112,22 +112,22 @@ public class GameObjectInflater {
     }
 
     /**
-     * Create the wind resistence from the xml config
+     * Create the wind Resistance from the xml config
      * 
      * Note that magnitudes are scaled by the dpToPx conversion
      * @return
      */
-    private WindResistence getWindResistence() {
-        return new WindResistence(
-    		Integer.parseInt(values.get("windReistenceDirection")), 
-    		dpToPx(values.get("windResistence")),
+    private WindResistance getWindResistance() {
+        return new WindResistance(
+    		Integer.parseInt(values.get("windResistanceDirection")), 
+    		dpToPx(values.get("windResistance")),
     		0,
-    		dpToPx(values.get("windResistence")),
+    		dpToPx(values.get("windResistance")),
     		Float.parseFloat(values.get("windChangeSpeed")),
     		Float.parseFloat(values.get("windChangeSpeed")),
     		Integer.parseInt(values.get("windChangeFrequency")),
-    		dpToPx(values.get("minimumWindResistence")),
-    		dpToPx(values.get("maximumWindResistence"))
+    		dpToPx(values.get("minimumWindResistance")),
+    		dpToPx(values.get("maximumWindResistance"))
 		);
     }
 
@@ -170,14 +170,17 @@ public class GameObjectInflater {
      * @return
      */
     private Train getTrain() {
+    	int height = (int) dpToPx(values.get("trainHeight"));
+        Bitmap train = BitmapFactory.decodeResource(r, R.drawable.train);
+        train = getResizedBitmapByHeight(train, height);
+        
         return new Train(
             (int) dpToPx(values.get("trainStartX")),
             r.getDisplayMetrics().heightPixels,
-            (int) dpToPx(values.get("trainWidth")),
-            (int) dpToPx(values.get("trainHeight")),
+            train,
             (int) dpToPx(values.get("trainSpeed")),
             0,
-            r.getDisplayMetrics().widthPixels - (int) dpToPx(values.get("trainWidth"))
+            r.getDisplayMetrics().widthPixels
         );
     }    
     

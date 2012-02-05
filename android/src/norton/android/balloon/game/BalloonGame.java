@@ -24,7 +24,7 @@ public class BalloonGame implements OnTouchListener, OnTickListener, Scene {
     private Balloon balloon;
     private Train train;
     private VariableVector wind;
-    private WindResistence windResistence;
+    private WindResistance windResistence;
     private Vector gravity;
     private VariableVector lift;
     private boolean burnerOn;
@@ -47,7 +47,7 @@ public class BalloonGame implements OnTouchListener, OnTickListener, Scene {
                        Balloon balloon, 
                        Train train,
                        VariableVector wind,
-                       WindResistence windResistence,
+                       WindResistance windResistence,
                        Vector gravity,
                        VariableVector lift) {
         this.burnerOn = false;
